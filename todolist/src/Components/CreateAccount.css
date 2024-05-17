@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.create-account-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e7dfd4;
+    font-family: "Montserrat", sans-serif;
+}
+
+.create-account-form {
+    margin-top: 160px;
+    width: 30%;
+    background: #e7dfd4;
+    padding: 20px;
+    border-radius: 20px;
+    border-color: #626d6f;
+    border-style: solid;
+    text-align: center;
+}
+
+.create-account-form h2{
+    font-family: "Montserrat", sans-serif;
+    color: #626d6f;
+    font-weight: bolder;
+}
+
+.form-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.create-account-form label {
+    margin-bottom: 8px; 
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color: #626d6f;
+}
+
+.create-account-form input{
+    width: 100%; 
+    border-radius: 5px;
+    border-color: #626d6f;
+    border-style: solid;
+    padding: 8px; 
+    box-sizing: border-box; 
+    font-family: "Montserrat", sans-serif;
+}
+
+.create-account-form button {
+    background-color: #626d6f;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color: #e7dfd4;
+    border: none;
+    padding: 10px 20px;
+    border-style: solid;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.create-account-form button:hover {
+    color: #626d6f;
+    background-color: #e7dfd4;
+}
+
+.link {
+    color: #626d6f;
+    font-family: "Montserrat", sans-serif;
+}
