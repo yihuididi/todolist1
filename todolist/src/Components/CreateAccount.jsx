@@ -11,7 +11,7 @@ export const CreateAccount = () => {
         e.preventDefault()
         try {
             await createUserWithEmailAndPassword(auth, email, password)
-            console.log("Login Successfully")
+            console.log("Account created successfully")
         } catch(err) {
             console.log(err)
         }
@@ -21,25 +21,25 @@ export const CreateAccount = () => {
     <div className='create-account-container'>
         <form className='create-account-form' onSubmit={handleSubmit}>
             <h2>Create Account</h2>
-            <div class="form-title">
+            <div class="create-account-form-title">
                 <label htmlFor="email">
                     Email:
                 </label>
                 <input type="text" class="form-input" onChange={(event) => setEmail(event.target.value)} />
             </div>
             <br />
-            <div class="form-title">
+            <div class="create-account-form-title">
                 <label htmlFor="password" >
                     Password:
                 </label>
-                <input type="password" class="form-input" onChange={(event) => setPassword(event.target.value)}/>
+                <input type="password" onChange={(event) => setPassword(event.target.value)}/>
             </div>
             <br />
             <br />
             <button type="submit">Create Account</button> 
             <br />
             <br />
-            <Link to="/login" className="link">Already Registered?</Link>
+            <Link to="/login" className='link-to-login'>Already Registered?</Link>
         </form>
     </div>
   )

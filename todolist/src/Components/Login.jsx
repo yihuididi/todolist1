@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import './CreateAccount.css'
+import './Login.css'
 import { Link } from 'react-router-dom'
 import {auth} from '../firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
@@ -18,20 +18,28 @@ export const Login = () => {
     }
 
   return (
-    <div className='create-account'>
-        <form className='create-account-form' onSubmit={handleSubmit}>
+    <div className='login-container'>  
+         <form className='login-form' onSubmit={handleSubmit}>
             <h2>Login</h2>
-            <label htmlFor="email">
-                Email:
-                <input type="text" onChange={(event) => setEmail(event.target.value)}/>
-            </label>
-            <label htmlFor="password" >
-                Password:
+            <div class="login-form-title">
+                <label htmlFor="email">
+                    Email:
+                </label>
+                <input type="text" onChange={(event) => setEmail(event.target.value)} />
+            </div>
+            <br />
+            <div class="login-form-title">
+                <label htmlFor="password" >
+                    Password:
+                </label>
                 <input type="password" onChange={(event) => setPassword(event.target.value)}/>
-            </label>
+            </div>
+            <br />
+            <br />
             <button type="submit">Login</button> 
             <br />
-            <p>Don't have an account?  <Link to="/create-account">Create Account</Link></p>
+            <br />
+            <Link to="/create-account" className='link-to-create-account'>Dont't have an account?</Link>
         </form>
     </div>
   )

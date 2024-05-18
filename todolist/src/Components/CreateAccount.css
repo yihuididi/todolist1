@@ -26,7 +26,7 @@
     font-weight: bolder;
 }
 
-.form-title {
+.create-account-form-title {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -67,7 +67,7 @@
     background-color: #e7dfd4;
 }
 
-.link {
+.link-to-login {
     color: #626d6f;
     font-family: "Montserrat", sans-serif;
 }
