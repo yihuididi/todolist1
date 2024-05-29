@@ -12,8 +12,9 @@ export const Login = () => {
       try {
         await signInWithEmailAndPassword(auth, email, password)
         console.log("Login Successfully")
+        window.location.href = "/home"
       } catch(err) {
-        console.log(err)
+        console.log(err.message)
       }
     }
 
@@ -21,14 +22,14 @@ export const Login = () => {
     <div className='login-container'>  
          <form className='login-form' onSubmit={handleSubmit}>
             <h2>Login</h2>
-            <div class="login-form-title">
+            <div className="login-form-title">
                 <label htmlFor="email">
                     Email:
                 </label>
                 <input type="text" onChange={(event) => setEmail(event.target.value)} />
             </div>
             <br />
-            <div class="login-form-title">
+            <div className="login-form-title">
                 <label htmlFor="password" >
                     Password:
                 </label>

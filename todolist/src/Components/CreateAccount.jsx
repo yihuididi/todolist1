@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import './CreateAccount.css'
 import { Link } from 'react-router-dom'
-import {auth} from '../firebase'
+import { auth, database } from '../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { setDoc, doc } from 'firebase/firestore'
+
 
 export const CreateAccount = () => {
     const [email, setEmail] = useState('')
@@ -11,24 +13,30 @@ export const CreateAccount = () => {
         e.preventDefault()
         try {
             await createUserWithEmailAndPassword(auth, email, password)
-            console.log("Account created successfully")
+            const user = auth.currentUser
+            if (user) {
+                await setDoc(doc(database, "Users", user.uid), { //store user uid in database named Users
+                    email: user.email
+                })
+            }
+            console.log("Create Account Successful")
         } catch(err) {
-            console.log(err)
+            console.log(err.message)
         }
     }
 
   return (
-    <div className='create-account-container'>
-        <form className='create-account-form' onSubmit={handleSubmit}>
+    <div className="create-account-container">
+        <form className="create-account-form" onSubmit={handleSubmit}>
             <h2>Create Account</h2>
-            <div class="create-account-form-title">
+            <div className="create-account-form-title">
                 <label htmlFor="email">
                     Email:
                 </label>
-                <input type="text" class="form-input" onChange={(event) => setEmail(event.target.value)} />
+                <input type="text" className="form-input" onChange={(event) => setEmail(event.target.value)} />
             </div>
             <br />
-            <div class="create-account-form-title">
+            <div className="create-account-form-title">
                 <label htmlFor="password" >
                     Password:
                 </label>
