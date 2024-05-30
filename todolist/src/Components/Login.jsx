@@ -3,6 +3,7 @@ import './Login.css'
 import { Link } from 'react-router-dom'
 import {auth} from '../firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import logo from '../Images/iconbeige.png'
 
 export const Login = () => {
     const [email, setEmail] = useState('')
@@ -19,28 +20,29 @@ export const Login = () => {
     }
 
   return (
-    <div className='login-container'>  
-         <form className='login-form' onSubmit={handleSubmit}>
-            <h2>Login</h2>
-            <div className="login-form-title">
-                <label htmlFor="email">
-                    Email:
-                </label>
-                <input type="text" onChange={(event) => setEmail(event.target.value)} />
-            </div>
-            <br />
-            <div className="login-form-title">
-                <label htmlFor="password" >
-                    Password:
-                </label>
-                <input type="password" onChange={(event) => setPassword(event.target.value)}/>
-            </div>
-            <br />
-            <br />
-            <button type="submit">Login</button> 
-            <br />
-            <br />
-            <Link to="/create-account" className='link-to-create-account'>Dont't have an account?</Link>
+    <div className='login-container'>
+      <img src={logo} className="logo-login" alt={logo}/> 
+        <form className='login-form' onSubmit={handleSubmit}> 
+          <h2>Login</h2>
+          <div className="login-form-title">
+            <label htmlFor="email">
+                Email:
+            </label>
+            <input type="text" onChange={(event) => setEmail(event.target.value)} />
+          </div>
+          <br />
+          <div className="login-form-title">
+            <label htmlFor="password" >
+                Password:
+            </label>
+            <input type="password" onChange={(event) => setPassword(event.target.value)}/>
+          </div>
+          <br />
+          <br />
+          <button type="submit">Login</button> 
+          <br />
+          <br />
+          <Link to="/create-account" className='link-to-create-account'>Dont't have an account?</Link>
         </form>
     </div>
   )

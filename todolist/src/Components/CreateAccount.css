@@ -2,6 +2,7 @@
 
 .create-account-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -10,7 +11,6 @@
 }
 
 .create-account-form {
-    margin-top: 160px;
     width: 30%;
     background: #e7dfd4;
     padding: 20px;
@@ -70,4 +70,14 @@
 .link-to-login {
     color: #626d6f;
     font-family: "Montserrat", sans-serif;
+}
+
+.logo-create-account{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    width: 370px;
+    padding-bottom: 50px;
 }

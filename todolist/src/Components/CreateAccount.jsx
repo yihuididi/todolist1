@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { auth, database } from '../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
+import logo from '../Images/icondarkblue.png'
 
 
 export const CreateAccount = () => {
@@ -27,6 +28,7 @@ export const CreateAccount = () => {
 
   return (
     <div className="create-account-container">
+        <img src={logo} className="logo-create-account" alt={logo}/>
         <form className="create-account-form" onSubmit={handleSubmit}>
             <h2>Create Account</h2>
             <div className="create-account-form-title">
