@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import { auth, database } from '../firebase'
 import { getDoc, doc } from 'firebase/firestore'
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
     const [userDetails, setUserDetails] = useState()
+    const navigate = useNavigate()
     const getUserDetails = async () => {
         auth.onAuthStateChanged(async (user) => {
             console.log(user)
@@ -21,7 +23,7 @@ export const Home = () => {
     const handleLogout = async () => {
         try {
             await auth.signOut();
-            window.location.href = "/login"
+            navigate("/login")
             console.log("User logged out Successfully!")
         } catch (err) {
             console.error("Error logging out", err.message)
