@@ -62,14 +62,14 @@ export const Home = () => {
                     {/* topbar with logo and logout buttons. */}
                     <div className="container-fluid top-bar">
                         <Link to="">
-                            <img className="logo" src={logo} alt="logo"/>
+                            <img className="home-logo" src={logo} alt="logo"/>
                         </Link>
                         <button className="Logout-button float-end" onClick={handleLogout}>Logout</button>
                     </div>
 
                     {/* div for greeting logged in user. */}
                     <div className="container mx-auto text-center greeting">
-                        <h1>Good day, {userDetails.email}</h1>
+                        <h1 id="greeting">Good day, {userDetails.email}</h1>
                     </div>
 
                     {/* div for listing out all user's created blogs. */}
