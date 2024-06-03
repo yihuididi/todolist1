@@ -5,6 +5,7 @@ import {auth} from '../firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import logo from '../Images/iconbeige.png'
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"
 
 export const Login = () => {
     const [email, setEmail] = useState('')
@@ -16,12 +17,13 @@ export const Login = () => {
         await signInWithEmailAndPassword(auth, email, password)
         navigate("/home")
       } catch(err) {
+        toast.error(err.message)
         console.log(err.message)
       }
     }
 
   return (
-    <div className= {styles.logincontainer}>
+    <div className={styles.logincontainer}>
       <img src={logo} className={styles.logologin} alt={logo}/> 
         <form className={styles.loginform} onSubmit={handleSubmit}> 
           <h2 className={styles.loginformh2}>Login</h2>

@@ -5,6 +5,7 @@ import { auth, database } from '../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
 import logo from '../Images/icondarkblue.png'
+import { toast } from "react-toastify"
 
 
 export const CreateAccount = () => {
@@ -20,8 +21,10 @@ export const CreateAccount = () => {
                     email: user.email
                 })
             }
+            toast.success("Account Created!")
             console.log("Create Account Successful")
         } catch(err) {
+            toast.error(err.message)
             console.log(err.message)
         }
     }

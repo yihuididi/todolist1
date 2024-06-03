@@ -5,6 +5,8 @@ import { Home } from './Components/Home.jsx';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { auth } from './firebase'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [user, setUser] = useState()
@@ -16,14 +18,15 @@ function App() {
   })
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={ user 
-          ? <Navigate to='/home' /> 
-          : <Login />}/>
-        <Route path='/create-account' element={<CreateAccount />}/>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/home' element={<Home />}/>
-      </Routes>
+        <Routes>
+          <Route path='/' element={ user 
+            ? <Navigate to='/home' /> 
+            : <Login />}/>
+          <Route path='/create-account' element={<CreateAccount />}/>
+          <Route path='/login' element={<Login />}/>
+          <Route path='/home' element={<Home />}/>
+        </Routes>
+        <ToastContainer />
     </BrowserRouter>
     
   );
