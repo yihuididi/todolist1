@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import './Login.css'
+import styles from './Login.module.css'
 import { Link } from 'react-router-dom'
 import {auth} from '../firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
@@ -21,29 +21,29 @@ export const Login = () => {
     }
 
   return (
-    <div className='login-container'>
-      <img src={logo} className="logo-login" alt={logo}/> 
-        <form className='login-form' onSubmit={handleSubmit}> 
-          <h2>Login</h2>
-          <div className="login-form-title">
-            <label htmlFor="email">
+    <div className= {styles.logincontainer}>
+      <img src={logo} className={styles.logologin} alt={logo}/> 
+        <form className={styles.loginform} onSubmit={handleSubmit}> 
+          <h2 className={styles.loginformh2}>Login</h2>
+          <div className={styles.loginformtitle}>
+            <label htmlFor="email" className={styles.loginformlabel}>
                 Email:
             </label>
-            <input type="text" onChange={(event) => setEmail(event.target.value)} />
+            <input type="text" className={styles.loginforminput} onChange={(event) => setEmail(event.target.value)} />
           </div>
           <br />
-          <div className="login-form-title">
-            <label htmlFor="password" >
+          <div className={styles.loginformtitle}>
+            <label htmlFor="password" className={styles.loginformlabel}>
                 Password:
             </label>
-            <input type="password" onChange={(event) => setPassword(event.target.value)}/>
+            <input type="password" className={styles.loginforminput} onChange={(event) => setPassword(event.target.value)}/>
           </div>
           <br />
           <br />
-          <button type="submit">Login</button> 
+          <button type="submit" className={styles.loginformbutton}>Login</button> 
           <br />
           <br />
-          <Link to="/create-account" className='link-to-create-account'>Dont't have an account?</Link>
+          <Link to="/create-account" className={styles.linktocreateaccount}>Dont't have an account?</Link>
         </form>
     </div>
   )

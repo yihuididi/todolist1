@@ -1,57 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');*/
 
-.login-container {
+.logincontainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #626d6f;
-    font-family: "Montserrat", sans-serif;
 }
 
-.login-form {
-    width: 30%;
+.loginform {
+    width: 40%;
     background: #626d6f;
-    padding: 20px;
+    padding: 40px;
     border-radius: 20px;
     border-color: #e7dfd4;
     border-style: solid;
     text-align: center;
+    margin-top: 15px;
 }
 
-.login-form h2{
-    font-family: "Montserrat", sans-serif;
+.loginformh2{
     color: #e7dfd4;
     font-weight: bolder;
+    margin-bottom: 10px;
 }
 
-.login-form-title {
+.loginformtitle {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.login-form label {
+.loginformlabel {
     margin-bottom: 8px; 
-    font-family: "Montserrat", sans-serif;
-    font-weight: bold;
+    font-weight: bolder;
     color: #e7dfd4;
 }
 
-.login-form input{
+.loginforminput{
     width: 100%; 
     border-radius: 5px;
     border-color: #e7dfd4;
     border-style: solid;
     padding: 8px; 
     box-sizing: border-box; 
-    font-family: "Montserrat", sans-serif;
 }
 
-.login-form button {
+.loginformbutton {
     background-color: #e7dfd4;
-    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     color: #626d6f;
     border: none;
@@ -62,22 +59,21 @@
     font-size: 16px;
 }
 
-.login-form button:hover {
+.loginformbutton:hover {
     color: #e7dfd4;
-    background-color: #e7dfd4;
+    background-color: #626d6f;
 }
 
-.link-to-create-account {
+.linktocreateaccount {
     color: #e7dfd4;
-    font-family: "Montserrat", sans-serif;
 }
 
-.logo-login {
+.logologin {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 120px;
     width: 375px;
-    padding-bottom: 50px;
+    margin-bottom: 20px;
 }
