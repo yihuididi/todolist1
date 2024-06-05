@@ -1,11 +1,11 @@
 .home .main-content {
     position: relative;
     background-color: #eee;
-    min-height: 100vh;
     top: 0;
     left: 80px;
     transition: all 0.5s ease;
     width: calc(100% - 80px);
+    height: 100vh;
     padding: 1rem;
 }
 
@@ -14,15 +14,43 @@
     width: calc(100% - 250px);
 }
 
+/* ============================ START: CSS for home sidebar ============================= */
 .home-sidebar {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100vh;
     width: 80px;
+    height: 100vh;
     background-color: #212529;
     padding: 0.4rem 0.8rem;
     transition: all 0.5s ease;
+    overflow: hidden;
+    scrollbar-gutter: stable;
+}
+
+.home-sidebar:hover {
+    overflow-y: scroll;
+}
+
+.home-sidebar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.home-sidebar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.home-sidebar::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.home-sidebar::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .home-sidebar.active {
@@ -38,7 +66,7 @@
     position: absolute;
     color: white;
     top: .4rem;
-    left: 50%;
+    left: 53%;
     font-size: 1.2rem;
     line-height: 50px;
     transform: translateX(-50%);
@@ -115,26 +143,4 @@
 .home-sidebar.active .page div span {
     display: inline;
 }
-
-.home-sidebar .page .label {
-    position: absolute;
-    left: 125px;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0.5rem 0.8rem gray;
-    border-radius: 0.3rem;
-    padding: 0.4rem 1.2rem;
-    line-height: 1.8rem;
-    z-index: 20;
-    opacity: 0;
-    display: none;
-}
-
-.home-sidebar .page:hover .label {
-    display: inline;
-    opacity: 1;
-}
-
-.home-sidebar.active .page .label {
-    display: none;
-}
+/* ============================ END: CSS for home sidebar ============================== */

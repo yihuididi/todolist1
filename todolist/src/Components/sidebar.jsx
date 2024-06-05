@@ -60,7 +60,6 @@ export function renderSidebar(user, pages, handleLogout) {
                             <i className="page-icon bi bi-file-earmark" onClick={openSidebar}/>
                             <span>{page.name}</span>
                         </div>
-                        <span className="label">{page.name}</span>
                     </li>
                 ))}
             </ul>
