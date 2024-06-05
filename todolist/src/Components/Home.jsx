@@ -1,9 +1,7 @@
-import logo from '../Images/icondarkblue.png'
 import React, {useState, useEffect} from 'react';
-import thumbnail from '../Images/thumbnail.png';
 import { auth, database } from '../firebase';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { Link } from 'react-router-dom'
+import { renderSidebar } from './sidebar.jsx';
 import { useNavigate } from "react-router-dom";
 import './Home.css';
 
@@ -11,8 +9,8 @@ export const Home = () => {
     // User state
     const [userDetails, setUserDetails] = useState();
 
-    // User blogs
-    const [blogs, setBlogs] = useState();
+    // User's pages
+    const [pages, setPages] = useState();
 
     const navigate = useNavigate();
     const getUserDetails = async () => {
@@ -30,12 +28,12 @@ export const Home = () => {
                     console.log("User not found");
                 }
 
-                // Get user's blogs if they exists
+                // Get user's pages if they exists
                 try {
-                    const userBlogs = await getDocs(collection(userRef, "Blogs"));
-                    setBlogs(userBlogs.docs.map(blog => ({
-                        ...blog.data(),
-                        id: blog.id,
+                    const userPages = await getDocs(collection(userRef, "Pages"));
+                    setPages(userPages.docs.map(page => ({
+                        ...page.data(),
+                        id: page.id,
                     })));
                 } catch (err) {
                     console.error(err);
@@ -56,36 +54,19 @@ export const Home = () => {
     }
 
     return (
-        <div>
-            {userDetails ? (
+        <div className="home">
+            {!userDetails  || !pages? (
+                <p>Loading...</p>
+            ) : (
                 <>
-                    {/* topbar with logo and logout buttons. */}
-                    <div className="container-fluid top-bar">
-                        <Link to="">
-                            <img className="home-logo" src={logo} alt="logo"/>
-                        </Link>
-                        <button className="Logout-button float-end" onClick={handleLogout}>Logout</button>
-                    </div>
-
-                    {/* div for greeting logged in user. */}
-                    <div className="container mx-auto text-center greeting">
-                        <h1 id="greeting">Good day, {userDetails.email}</h1>
-                    </div>
-
-                    {/* div for listing out all user's created blogs. */}
-                    <div className="container mx-auto text-center">
-                        <div className="row row-cols-4">
-                            {blogs?.map(blog => (
-                                <div className="col">
-                                    <img class="thumbnail" src={thumbnail} alt="thumbnail"/>
-                                    <h6>{blog.name}</h6>
-                                </div>
-                            ))}
-                        </div>
+                    {/* sidebar navigation */}
+                    {renderSidebar(userDetails, pages, handleLogout)}
+                    
+                    {/* main content */}
+                    <div className="main-content">
+                        <h1>Content goes here.</h1>
                     </div>
                 </>
-            ) : (
-                <p>Loading...</p>
             )}
         </div>
     )

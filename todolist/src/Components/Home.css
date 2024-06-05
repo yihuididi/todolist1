@@ -1,31 +1,140 @@
-.top-bar {
-    padding: 10px;
-    height: 60px;
+.home .main-content {
+    position: relative;
+    background-color: #eee;
+    min-height: 100vh;
+    top: 0;
+    left: 80px;
+    transition: all 0.5s ease;
+    width: calc(100% - 80px);
+    padding: 1rem;
 }
 
-.home-logo {
+.home-sidebar.active ~ .main-content {
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+.home-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80px;
+    background-color: #212529;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.5s ease;
+}
+
+.home-sidebar.active {
+    width: 250px;
+}
+
+.home-sidebar .app-logo {
+    width: 150px;
     height: auto;
+}
+
+.home-sidebar .collapse-btn {
+    position: absolute;
+    color: white;
+    top: .4rem;
+    left: 50%;
+    font-size: 1.2rem;
+    line-height: 50px;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+.home-sidebar.active .collapse-btn {
+    left: 90%;
+}
+
+.home-sidebar .top .app-logo {
+    display: flex;
+    height: 50px;
     width: auto;
-    object-fit: contain;
-    max-height: 100%;
+    align-items: center;
+    opacity: 0;
 }
 
-.greeting {
-    padding: 20px;
-    height: 120px;
+.home-sidebar.active .top .app-logo {
+    opacity: 1;
 }
 
-.thumbnail {
-    height: auto;
-    width: auto;
-    object-fit: contain;
-    max-width: 150px;
+.home-sidebar .dropdown {
+    align-items: center;
+    color: white;
+    margin: 0.8rem;
 }
 
-h1 {
-    font-size: 1.8rem;
+.home-sidebar .dropdown .username {
+    color: white;
+    display: none;
+    font-weight: 600;
 }
 
-h6 {
-    font-size: 1rem;
+.home-sidebar.active .dropdown .username {
+    display: inline;
+}
+
+.home-sidebar .page {
+    position: relative;
+    list-style-type: none;
+    height: 50px;
+    width: 114%;
+    margin: 0.8rem auto;
+    margin-left: -1.85rem;
+    line-height: 50px;
+    min-width: 50px;
+}
+
+.home-sidebar .page div {
+    color: white;
+    display: flex;
+    align-items: center;
+    border-radius: 0.3rem;
+}
+
+.home-sidebar .page div:hover {
+    background-color: white;
+    color: #12171e;
+}
+
+.home-sidebar .page div i {
+    min-width: 50px;
+    text-align: center;
+    height: 50px;
+    border-radius: 5px;
+    line-height: 50px;
+}
+
+.home-sidebar .page div span {
+    display: none;
+}
+
+.home-sidebar.active .page div span {
+    display: inline;
+}
+
+.home-sidebar .page .label {
+    position: absolute;
+    left: 125px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0.5rem 0.8rem gray;
+    border-radius: 0.3rem;
+    padding: 0.4rem 1.2rem;
+    line-height: 1.8rem;
+    z-index: 20;
+    opacity: 0;
+    display: none;
+}
+
+.home-sidebar .page:hover .label {
+    display: inline;
+    opacity: 1;
+}
+
+.home-sidebar.active .page .label {
+    display: none;
 }
