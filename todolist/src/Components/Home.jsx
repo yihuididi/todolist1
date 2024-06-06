@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import { Sidebar } from './sidebar.jsx';
+import { Utilitybar } from './utilitybar.jsx';
 import { auth, database } from '../firebase';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { Sidebar } from './sidebar.jsx';
 import { useNavigate } from "react-router-dom";
 import './Home.css';
 
@@ -60,10 +61,13 @@ export const Home = () => {
             ) : (
                 <>
                     {/* sidebar navigation */}
-                    {Sidebar(userDetails, pages, handleLogout)}
-                    
+                    <Sidebar user={userDetails} pages={pages} handleLogout={handleLogout} />
+
                     {/* main content */}
                     <div className="main-content">
+                        {/* Utilities bar on top of page */}
+                        <Utilitybar user={userDetails} />
+
                         <h1>Content goes here.</h1>
                     </div>
                 </>

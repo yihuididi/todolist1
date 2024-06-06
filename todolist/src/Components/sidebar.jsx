@@ -1,6 +1,6 @@
 import logo from '../Images/iconbeige.png';
 
-export function Sidebar(user, pages, handleLogout) {
+export function Sidebar({ user, pages, handleLogout }) {
     function toggleSidebar() {
         document.querySelector('.home-sidebar').classList.toggle('active');
     }
@@ -28,10 +28,6 @@ export function Sidebar(user, pages, handleLogout) {
                 </div>
 
                 <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <li>
-                       <a className="dropdown-item" href="">New Page</a>
-                   </li>
-
                    <li>
                        <a className="dropdown-item" href="">Settings</a>
                    </li>

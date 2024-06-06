@@ -6,7 +6,6 @@
     transition: all 0.5s ease;
     width: calc(100% - 80px);
     height: 100vh;
-    padding: 1rem;
 }
 
 .home-sidebar.active ~ .main-content {
@@ -14,7 +13,8 @@
     width: calc(100% - 250px);
 }
 
-/* ============================ START: CSS for home sidebar ============================= */
+/* ============================ CSS for sidebar ============================= */
+
 .home-sidebar {
     position: absolute;
     top: 0;
@@ -93,6 +93,7 @@
     align-items: center;
     color: white;
     margin: 0.8rem;
+    cursor: pointer;
 }
 
 .home-sidebar .dropdown .username {
@@ -145,7 +146,54 @@
     display: inline;
 }
 
-.home-sidebar .dropdown .dropdown-item {
-    cursor: pointer;
+/* ============================ CSS for utility bar ============================== */
+
+.home-utilities {
+    font-weight: 500;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 5%;
+    background-color: #fafafa;
 }
-/* ============================ END: CSS for home sidebar ============================== */
+
+.home-utilities .user {
+    margin-right: auto;
+}
+
+.home-utilities .user .user-info {
+    margin-right:  2rem;
+}
+
+.home-utilities .utilities ul {
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.home-utilities .utilities li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.home-utilities .utilities .util-btn {
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.home-utilities .utilities .util-btn:hover {
+    color: #0088a9;
+}
+
+.home-utilities .utilities .dropdown-menu li {
+    padding: 5px 20px;
+    width: 100%;
+}
+
+.home-utilities .utilities .dropdown-menu li:hover {
+    background-color: #f8f9fa;
+}
+
+.home-utilities .utilities .dropdown-menu li a {
+    color: inherit;
+}
