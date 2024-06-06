@@ -1,7 +1,9 @@
 import React from 'react';
 import logo from '../Images/iconbeige.png';
 
+
 export default function Sidebar({user, pages, handleLogout, onPageSelect}) {
+
     function toggleSidebar() {
         document.querySelector('.home-sidebar').classList.toggle('active');
     }
