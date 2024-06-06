@@ -1,6 +1,7 @@
+import React from 'react';
 import logo from '../Images/iconbeige.png';
 
-export function renderSidebar(user, pages, handleLogout) {
+export default function Sidebar({user, pages, handleLogout, onPageSelect}) {
     function toggleSidebar() {
         document.querySelector('.home-sidebar').classList.toggle('active');
     }
@@ -45,7 +46,7 @@ export function renderSidebar(user, pages, handleLogout) {
                    </li>
 
                    <li>
-                       <div className="dropdown-item" onClick={handleLogout}>Signout</div>
+                       <button className="dropdown-item" onClick={handleLogout}>Signout</button>
                    </li>
                 </ul>
             </div>
@@ -55,7 +56,7 @@ export function renderSidebar(user, pages, handleLogout) {
             {/* List out all of user's pages */}
             <ul>
                 {pages.map(page => (
-                    <li key={page.id} className="page">
+                    <li key={page.id} className="page" onClick={() => onPageSelect(page.id)}>
                         <div>
                             <i className="page-icon bi bi-file-earmark" onClick={openSidebar}/>
                             <span>{page.name}</span>
