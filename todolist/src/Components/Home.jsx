@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, database } from '../firebase';
 import { collection, doc, getDoc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
 import Sidebar from './sidebar.jsx';
+import Utilitybar from './utilitybar.jsx';
 import Page from './Page.jsx';
 import { useNavigate } from "react-router-dom";
 import './Home.css';
@@ -85,6 +86,10 @@ export const Home = () => {
                 <>
                     <Sidebar user={userDetails} pages={pages} handleLogout={handleLogout} onPageSelect={handlePageSelect} />
                     <div className="main-content">
+
+                        {/* Load top utility bar */}
+                        <Utilitybar user={userDetails} />
+
                         {selectedPageId ? (
                             <Page 
                                 blocks={blocks} 

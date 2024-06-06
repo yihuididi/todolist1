@@ -45,7 +45,7 @@ function alerts(user) {
     };
 }
 
-export function Utilitybar({ user }) {
+export default function Utilitybar({ user }) {
     function getUtils() {
         return [createNewPage(), alerts(user)];
     }
