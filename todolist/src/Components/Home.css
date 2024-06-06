@@ -114,6 +114,7 @@
     margin-left: -1.85rem;
     line-height: 50px;
     min-width: 50px;
+    cursor: pointer;
 }
 
 .home-sidebar .page div {
@@ -142,5 +143,9 @@
 
 .home-sidebar.active .page div span {
     display: inline;
+}
+
+.home-sidebar .dropdown .dropdown-item {
+    cursor: pointer;
 }
 /* ============================ END: CSS for home sidebar ============================== */

@@ -1,6 +1,6 @@
 import logo from '../Images/iconbeige.png';
 
-export function renderSidebar(user, pages, handleLogout) {
+export function Sidebar(user, pages, handleLogout) {
     function toggleSidebar() {
         document.querySelector('.home-sidebar').classList.toggle('active');
     }
@@ -45,7 +45,7 @@ export function renderSidebar(user, pages, handleLogout) {
                    </li>
 
                    <li>
-                       <div className="dropdown-item" onClick={handleLogout}>Signout</div>
+                       <button className="dropdown-item" onClick={handleLogout}>Signout</button>
                    </li>
                 </ul>
             </div>

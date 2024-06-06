@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { auth, database } from '../firebase';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { renderSidebar } from './sidebar.jsx';
+import { Sidebar } from './sidebar.jsx';
 import { useNavigate } from "react-router-dom";
 import './Home.css';
 
@@ -60,7 +60,7 @@ export const Home = () => {
             ) : (
                 <>
                     {/* sidebar navigation */}
-                    {renderSidebar(userDetails, pages, handleLogout)}
+                    {Sidebar(userDetails, pages, handleLogout)}
                     
                     {/* main content */}
                     <div className="main-content">
