@@ -1,3 +1,14 @@
+.home {
+    transition: all 0.5s ease;
+}
+
+.home.blur {
+    filter: blur(5px);
+    pointer-events: none;
+    user-select: none;
+    transition: all 0.5s ease;
+}
+
 .home .main-content {
     position: relative;
     background-color: #eee;
@@ -23,7 +34,7 @@
     height: 100vh;
     background-color: #212529;
     padding: 0.4rem 0.8rem;
-    transition: all 0.5s ease;
+    transition: all .5s ease;
     overflow: hidden;
     scrollbar-gutter: stable;
 }
@@ -143,7 +154,7 @@
 }
 
 .home-sidebar.active .page div span {
-    display: inline;
+    display: flex;
 }
 
 /* ============================ CSS for utility bar ============================== */
@@ -186,6 +197,7 @@
 }
 
 .home-utilities .utilities .dropdown-menu li {
+    cursor: pointer;
     padding: 5px 20px;
     width: 100%;
 }
@@ -196,4 +208,43 @@
 
 .home-utilities .utilities .dropdown-menu li a {
     color: inherit;
+}
+
+.settings-popup {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    max-width: 800px;
+    padding: 5%;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, .30);
+    background: #fff;
+    display: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.settings-popup.active {
+    top: 50%;
+    display: block;
+    opacity: 1;
+}
+
+.settings-popup .header {
+    margin-bottom: 40px;
+}
+
+.settings-popup .header .page-name {
+    color: gray;
+    font-size: 15px;
+}
+
+.settings-popup form input {
+    margin: 10px 0px;
+}
+
+.settings-popup form button {
+    margin-top: 20px;
+    margin-right: 15px;
 }

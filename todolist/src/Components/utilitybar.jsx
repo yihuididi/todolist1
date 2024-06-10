@@ -1,57 +1,117 @@
+import { doc, getDoc } from 'firebase/firestore';
 import { Levels } from './levels.jsx';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { popUpSettings } from './settings.jsx';
 
-function createNewPage() {
-    return {
-        key: 'createNewPage',
-        html:
-            <div className="dropdown-center">
-                <div className="util-btn" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="bi bi-file-earmark-plus"/>
+export default function Utilitybar({ user, addPage, selectedPage, deletePage, handlePageSelect }) {
+    // List of utilites
+    const [utils, setUtils] = useState([]);
+
+    /**
+     * Creates html for creating a new page.
+     * Calls Home::addPage.
+     */
+    function createNewPage() {
+        return {
+            key: 'createNewPage',
+            html:
+                <div className="dropdown-center">
+                    <div className="util-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i className="bi bi-file-earmark-plus"/>
+                    </div>
+                    <ul className="dropdown-menu">
+                        <li onClick={addPage}>Create new page</li>
+                    </ul>
                 </div>
-                <ul className="dropdown-menu">
-                    <li><Link className="text-decoration-none" to="#">Create new page</Link></li>
-                </ul>
-            </div>
-    };
-}
-
-function alerts(user) {
-    return {
-        key: 'alerts',
-        html:
-            <div className="dropdown-center">
-                <div className="util-btn" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="bi bi-exclamation-triangle"/>
-                </div>
-                <ul className="dropdown-menu">
-
-                    {/* Function to be implemented
-                    {getUrgentTask(user).map(task => (
-                        <li key={task.id}>
-                            {task.description}
-                        </li>
-                    ))}
-                    */}
-
-                    {/* Temporary code */}
-                    <li>Urgent Task 1</li>
-                    <li>Urgent Task 2</li>
-                    <li>Urgent Task 3</li>
-
-                </ul>
-            </div>
-    };
-}
-
-export default function Utilitybar({ user }) {
-    function getUtils() {
-        return [createNewPage(), alerts(user)];
+        };
     }
 
-    // List of utilities
-    const [utils, setUtils] = useState(getUtils());
+    /**
+     * Creates html for showing list of user's tasks whose dateline is approaching.
+     */
+    function alerts(user) {
+        return {
+            key: 'alerts',
+            html:
+                <div className="dropdown-center">
+                    <div className="util-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i className="bi bi-exclamation-triangle"/>
+                    </div>
+                    <ul className="dropdown-menu">
+
+                        {/* Function to be implemented
+                        {getUrgentTask(user).map(task => (
+                            <li key={task.id}>
+                                {task.description}
+                            </li>
+                        ))}
+                        */}
+
+                        {/* Temporary code */}
+                        <li>To be implemented...</li>
+
+                    </ul>
+                </div>
+        };
+    }
+
+    /**
+     * Creates html for deleting selected page from firestore.
+     * Calls Home::deletePage and change selectedPage to null.
+     */
+    function deleteSelectedPage(selectedPage) {
+        const deletePageAndHandlePageSelect = () => {
+            handlePageSelect(null);
+            deletePage(selectedPage);
+        };
+
+        return {
+            key: 'deletePage',
+            html:
+                <div className="dropdown-center">
+                    <div className="util-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i className="bi bi-trash"/>
+                    </div>
+                    <ul className="dropdown-menu">
+                        <li onClick={deletePageAndHandlePageSelect}>Delete page</li>
+                    </ul>
+                </div>
+        };
+    }
+
+    /**
+     * Creates html for changing settings of current page.
+     */
+    function pageSettings() {
+
+        return {
+            key: 'pageSettings',
+            html:
+                <div className="settings">
+                    <div className="util-btn" onClick={popUpSettings}>
+                        <i className="bi bi-gear"/>
+                    </div>
+                </div>
+        }
+    }
+
+    /**
+     * Fill up utils array based on what page the user selected.
+     */
+    function getUtils() {
+        const utils = [createNewPage(), alerts(user)];
+        if (selectedPage) {
+            utils.push(deleteSelectedPage(selectedPage));
+            utils.push(pageSettings());
+        }
+        setUtils(utils);
+        return utils;
+    }
+
+    // Call getUtils() whenever selectedPage changes
+    useEffect(() => {
+        setUtils(getUtils);
+    }, [selectedPage]);
 
     return (
         <div className="home-utilities">
