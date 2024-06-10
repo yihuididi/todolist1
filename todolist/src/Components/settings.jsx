@@ -45,7 +45,6 @@ export default function Settings({ pages, page, updatePage }) {
      */
     const onSubmit = async (data) => {
         if (data.name != '') {
-            console.log(pages.map(p => p.name).includes(data.name));
             await updatePage(page, 'name', data.name);
         }
         reset();
@@ -71,9 +70,9 @@ export default function Settings({ pages, page, updatePage }) {
                     {/* Form for updating page settings */}
                     <form onSubmit={handleSubmit(onSubmit)} className="align-items-center row mb-3">
 
-                        <label className="col-sm-3 col-form-label">Page name</label>
+                        <label htmlFor="settings-page-name" className="col-sm-3 col-form-label">Page name</label>
                         <div className="col-sm-9">
-                            <input type="text" className="form-control" placeholder={page.name}
+                            <input id="settings-page-name" type="text" className="form-control" autoComplete="name" placeholder={page.name}
                                 {...register("name", {
                                     maxLength: {
                                         value: 50,
@@ -90,9 +89,9 @@ export default function Settings({ pages, page, updatePage }) {
                             )}
                         </div>
 
-                        <label className="col-sm-3 col-form-label">Page icon</label>
+                        <label htmlFor="settings-page-icon" className="col-sm-3 col-form-label">Page icon</label>
                         <div className="col-sm-9">
-                            <input type="text" disabled className="form-control" placeholder="Coming soon"
+                            <input id="settings-page-icon" type="text" disabled className="form-control" placeholder="Coming soon"
                                 {...register("icon")}
                             />
                         </div>

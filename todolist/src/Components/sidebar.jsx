@@ -52,12 +52,12 @@ export default function Sidebar({user, pages, handleLogout, onPageSelect}) {
             <hr/>
 
             {/* List out all of user's pages */}
-            <ul>
+            <ul className="pagelist">
                 {pages.map(page => (
                     <li key={page.id} className="page" onClick={() => onPageSelect(page)}>
                         <div>
                             <i className="page-icon bi bi-file-earmark" onClick={openSidebar}/>
-                            <span>{page.name}</span>
+                            <span className="page-name">{page.name}</span>
                         </div>
                     </li>
                 ))}

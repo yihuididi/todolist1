@@ -101,60 +101,68 @@
 }
 
 .home-sidebar .dropdown {
+    display: flex;
     align-items: center;
     color: white;
     margin: 0.8rem;
     cursor: pointer;
 }
 
+.home-sidebar .dropdown i {
+    margin-bottom: 0;
+}
+
 .home-sidebar .dropdown .username {
+    opacity: 0;
     color: white;
-    display: none;
     font-weight: 600;
 }
 
 .home-sidebar.active .dropdown .username {
-    display: inline;
+    opacity: 1;
 }
 
-.home-sidebar .page {
+.home-sidebar .pagelist {
+    margin: 0;
+    padding: 0;
+}
+
+.home-sidebar .pagelist .page {
     position: relative;
+    left: 2px;
     list-style-type: none;
     height: 50px;
-    width: 114%;
-    margin: 0.8rem auto;
-    margin-left: -1.85rem;
+    margin: 8px 0;
     line-height: 50px;
-    min-width: 50px;
     cursor: pointer;
 }
 
-.home-sidebar .page div {
+.home-sidebar .pagelist .page div {
     color: white;
     display: flex;
-    align-items: center;
     border-radius: 0.3rem;
 }
 
-.home-sidebar .page div:hover {
+.home-sidebar .pagelist .page div:hover {
     background-color: white;
     color: #12171e;
 }
 
-.home-sidebar .page div i {
+.home-sidebar .pagelist .page div i {
     min-width: 50px;
     text-align: center;
     height: 50px;
-    border-radius: 5px;
+    border-radius: 12px;
     line-height: 50px;
 }
 
-.home-sidebar .page div span {
-    display: none;
+.home-sidebar .pagelist .page div .page-name {
+    white-space: nowrap;
+    opacity: 0;
 }
 
-.home-sidebar.active .page div span {
-    display: flex;
+.home-sidebar.active .pagelist .page div .page-name {
+    opacity: 1;
 }
 
 /* ============================ CSS for utility bar ============================== */
@@ -220,7 +228,7 @@
     padding: 5%;
     box-shadow: 0 5px 30px rgba(0, 0, 0, .30);
     background: #fff;
-    display: hidden;
+    display: none;
     opacity: 0;
     transition: 0.5s;
 }
