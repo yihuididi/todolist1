@@ -7,6 +7,7 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
     const [newTaskName, setNewTaskName] = useState('');
     const [newTaskCategory, setNewTaskCategory] = useState('');
     const [newTaskDueDate, setNewTaskDueDate] = useState('');
+    const [newTaskExpReward, setNewTaskExpReward] = useState('');
     const db = getFirestore();
 
     useEffect(() => {
@@ -25,7 +26,7 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
             category: newTaskCategory,
             creationTime: new Date(),
             dueDate: newTaskDueDate,
-            expReward: 0,
+            expReward: newTaskExpReward,
             completed: false
         };
         await setDoc(newTaskRef, newTask);
@@ -94,6 +95,12 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
                         type="date" 
                         value={newTaskDueDate} 
                         onChange={(e) => setNewTaskDueDate(e.target.value)} 
+                    />
+                    <input 
+                        type="number" 
+                        placeholder="EXP" 
+                        value={newTaskExpReward} 
+                        onChange={(e) => setNewTaskExpReward(e.target.value)} 
                     />
                     <button onClick={addTask} className="btn btn-primary">Add Task</button>
                 </div>

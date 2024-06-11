@@ -18,11 +18,13 @@ const Task = ({ task, onDelete, onUpdate }) => {
                 <>
                     <input 
                         type="text" 
+                        placeholder="Task Name"
                         value={name} 
                         onChange={(e) => setName(e.target.value)} 
                     />
                     <input 
                         type="text" 
+                        placeholder="Category"
                         value={category} 
                         onChange={(e) => setCategory(e.target.value)} 
                     />
@@ -33,6 +35,7 @@ const Task = ({ task, onDelete, onUpdate }) => {
                     />
                     <input 
                         type="number" 
+                        placeholder="EXP"
                         value={expReward} 
                         onChange={(e) => setExpReward(e.target.value)} 
                     />
@@ -43,7 +46,7 @@ const Task = ({ task, onDelete, onUpdate }) => {
                     <p>{task.name}</p>
                     <p>{task.category}</p>
                     <p>{task.dueDate}</p>
-                    <p>{task.expReward} XP</p>
+                    <p>{task.expReward}XP</p>
                     <input 
                         type="checkbox" 
                         checked={task.completed} 
