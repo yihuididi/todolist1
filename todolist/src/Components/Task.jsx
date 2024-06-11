@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
 const Task = ({ task, onDelete, onUpdate }) => {
     const [editing, setEditing] = useState(false);
@@ -13,50 +14,81 @@ const Task = ({ task, onDelete, onUpdate }) => {
     };
 
     return (
-        <div className="task">
-            {editing ? (
-                <>
-                    <input 
-                        type="text" 
-                        placeholder="Task Name"
-                        value={name} 
-                        onChange={(e) => setName(e.target.value)} 
-                    />
-                    <input 
-                        type="text" 
-                        placeholder="Category"
-                        value={category} 
-                        onChange={(e) => setCategory(e.target.value)} 
-                    />
-                    <input 
-                        type="date" 
-                        value={dueDate} 
-                        onChange={(e) => setDueDate(e.target.value)} 
-                    />
-                    <input 
-                        type="number" 
-                        placeholder="EXP"
-                        value={expReward} 
-                        onChange={(e) => setExpReward(e.target.value)} 
-                    />
-                    <button onClick={handleUpdate}>Save</button>
-                </>
-            ) : (
-                <>
-                    <p>{task.name}</p>
-                    <p>{task.category}</p>
-                    <p>{task.dueDate}</p>
-                    <p>{task.expReward}XP</p>
-                    <input 
-                        type="checkbox" 
-                        checked={task.completed} 
-                        onChange={() => onUpdate({ completed: !task.completed })} 
-                    />
-                    <button onClick={() => setEditing(true)}>Edit</button>
-                    <button onClick={onDelete}>Delete</button>
-                </>
-            )}
-        </div>
+        <>
+            {/* Container of a task*/}
+            <div className="task card mb-3">
+                <div className="card-body">
+                    <h5 className="card-title">{task.name}</h5>
+                    <p className="card-text">Category: {task.category}</p>
+                    <p className="card-text">Due Date: {task.dueDate}</p>
+                    <p className="card-text">EXP: {task.expReward}XP</p>
+                    <div className="form-check mb-2">
+                        <input 
+                            type="checkbox" 
+                            className="form-check-input"
+                            checked={task.completed} 
+                            onChange={() => onUpdate({ completed: !task.completed })} 
+                        />
+                        <label className="form-check-label">Completed</label>
+                    </div>
+                    <Button variant="primary" onClick={() => setEditing(true)}>Edit</Button>
+                    <Button variant="danger" onClick={onDelete}>Delete</Button>
+                </div>
+            </div>
+
+            {/* Bootstrap Modal(popup) for Editing Task */}
+            <Modal show={editing} onHide={() => setEditing(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Task</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="mb-3">
+                        <label className="form-label">Task Name</label>
+                        <input 
+                            type="text" 
+                            className="form-control"
+                            placeholder="Task Name"
+                            value={name} 
+                            onChange={(e) => setName(e.target.value)} 
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Category</label>
+                        <input 
+                            type="text" 
+                            className="form-control"
+                            placeholder="Category"
+                            value={category} 
+                            onChange={(e) => setCategory(e.target.value)} 
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Due Date</label>
+                        <input 
+                            type="date" 
+                            className="form-control"
+                            value={dueDate} 
+                            onChange={(e) => setDueDate(e.target.value)} 
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">EXP</label>
+                        <input 
+                            type="number" 
+                            className="form-control"
+                            placeholder="EXP"
+                            value={expReward} 
+                            onChange={(e) => setExpReward(e.target.value)} 
+                        />
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setEditing(false)}>Close</Button>
+                    <Button variant="primary" onClick={handleUpdate}>Save Changes</Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+        
     );
 };
 

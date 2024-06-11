@@ -13,6 +13,7 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock }) => {
 
     return (
         <div className="page-content">
+            {/* div to add form */}
             <div className="add-block-form">
                 <input 
                     type="text" 
@@ -27,6 +28,7 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock }) => {
                 />
                 <button onClick={handleAddBlock} className="btn btn-primary">Add Block</button>
             </div>
+            {/* Container of blocks */}
             <div className="blocks-container">
                 {blocks.map((block) => (
                     <div key={block.id} style={{ backgroundColor: block.color }}>
