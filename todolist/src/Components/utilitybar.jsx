@@ -3,13 +3,12 @@ import { Levels } from './levels.jsx';
 import { useState, useEffect } from 'react';
 import { popUpSettings } from './settings.jsx';
 
-export default function Utilitybar({ user, addPage, selectedPage, deletePage, handlePageSelect }) {
+export default function Utilitybar({ user, addPage, selectedPage, deletePage }) {
     // List of utilites
     const [utils, setUtils] = useState([]);
 
     /**
      * Creates html for creating a new page.
-     * Calls Home::addPage.
      */
     function createNewPage() {
         return {
@@ -57,14 +56,8 @@ export default function Utilitybar({ user, addPage, selectedPage, deletePage, ha
 
     /**
      * Creates html for deleting selected page from firestore.
-     * Calls Home::deletePage and change selectedPage to null.
      */
     function deleteSelectedPage(selectedPage) {
-        const deletePageAndHandlePageSelect = () => {
-            handlePageSelect(null);
-            deletePage(selectedPage);
-        };
-
         return {
             key: 'deletePage',
             html:
@@ -73,7 +66,7 @@ export default function Utilitybar({ user, addPage, selectedPage, deletePage, ha
                         <i className="bi bi-trash"/>
                     </div>
                     <ul className="dropdown-menu">
-                        <li onClick={deletePageAndHandlePageSelect}>Delete page</li>
+                        <li onClick={() => deletePage(selectedPage)}>Delete page</li>
                     </ul>
                 </div>
         };

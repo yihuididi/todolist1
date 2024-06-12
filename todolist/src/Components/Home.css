@@ -137,15 +137,47 @@
     cursor: pointer;
 }
 
+/* Animation for growing page when it is created and shrinking page when it is deleted */
+@keyframes growshrink {
+    0% {
+        height: 100%;
+        color: rgba(24, 25, 30, 1.0);
+    }
+    50% {
+        height: 100%;
+        color: rgba(24, 25, 30, 0.0);
+    }
+    100% {
+        height: 0px;
+        color: rgba(24, 25, 30, 0.0);
+    }
+}
+
 .home-sidebar .pagelist .page div {
     color: white;
     display: flex;
     border-radius: 0.3rem;
 }
 
+.home-sidebar .pagelist .page div.shrinking {
+    animation-name: growshrink;
+    animation-duration: 1s;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+.home-sidebar .pagelist .page div.growing {
+    animation-name: growshrink;
+    animation-duration: 1s;
+    animation-direction: reverse;
+    animation-fill-mode: backwards;
+    animation-play-state: running;
+}
+
 .home-sidebar .pagelist .page div:hover {
-    background-color: white;
-    color: #12171e;
+    background-color: white !important;
+    color: rgba(24, 25, 30, 1) !important;
 }
 
 .home-sidebar .pagelist .page div i {
@@ -228,15 +260,16 @@
     padding: 5%;
     box-shadow: 0 5px 30px rgba(0, 0, 0, .30);
     background: #fff;
-    display: none;
+    visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: all 0.5s ease;
 }
 
 .settings-popup.active {
     top: 50%;
-    display: block;
+    visibility: visible;
     opacity: 1;
+    transition: all 0.5s ease;
 }
 
 .settings-popup .header {

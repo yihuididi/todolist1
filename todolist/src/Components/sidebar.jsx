@@ -1,9 +1,28 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import logo from '../Images/iconbeige.png';
 
+export default function Sidebar({user, pages, selectedPage, newPage, setNewPage, deletedPage, setDeletedPage, handleLogout, handlePageSelect}) {
+    // Store pages locally
+    const [localPages, setLocalPages] = useState(pages);
 
-export default function Sidebar({user, pages, handleLogout, onPageSelect}) {
-    console.log(pages);
+    useEffect(() => {
+        // Handle delete page animation
+        if (deletedPage) {
+            const dp = document.getElementById(`${deletedPage.id}`);
+            if (dp) {
+                dp.classList.add('shrinking');
+                const timer = setTimeout(() => {
+                    setDeletedPage(null);
+                    handlePageSelect(null);
+                    setLocalPages(pages);
+                }, 1000);
+                return () => clearTimeout(timer);
+            }
+        } else {
+            setLocalPages(pages);
+        }
+    }, [pages]);
+
     function toggleSidebar() {
         document.querySelector('.home-sidebar').classList.toggle('active');
     }
@@ -11,6 +30,38 @@ export default function Sidebar({user, pages, handleLogout, onPageSelect}) {
     function openSidebar() {
         document.querySelector('.home-sidebar').classList.add('active');
     }
+
+    // Shows visual indication for user's selected page
+    useEffect(() => {
+        document.querySelectorAll('.home-sidebar .pagelist .page div').forEach(li => {
+            li.style.backgroundColor = 'transparent';
+            li.style.color = 'white';
+        });
+
+        if (selectedPage) {
+            const selected = document.getElementById(`${selectedPage.id}`);
+            if (selected) {
+                selected.style.backgroundColor = 'white';
+                selected.style.color = 'rgba(24, 25, 30, 1)';
+            }
+        }
+    }, [localPages, selectedPage]);
+
+    // Handle new page animation
+    useEffect(() => {
+        if (newPage) {
+            handlePageSelect(newPage);
+            const np = document.getElementById(`${newPage.id}`);
+            if (np) {
+                np.classList.add('growing');
+                const timer = setTimeout(() => {
+                    np.classList.remove('growing');
+                    setNewPage(null);
+                }, 1000);
+                return () => clearTimeout(timer);
+            }
+        }
+    }, [localPages]);
 
     return (
         <div className="home-sidebar">
@@ -53,9 +104,9 @@ export default function Sidebar({user, pages, handleLogout, onPageSelect}) {
 
             {/* List out all of user's pages */}
             <ul className="pagelist">
-                {pages.map(page => (
-                    <li key={page.id} className="page" onClick={() => onPageSelect(page)}>
-                        <div>
+                {localPages.map(page => (
+                    <li key={page.id} className='page' onClick={() => handlePageSelect(page)}>
+                        <div id={page.id}>
                             <i className="page-icon bi bi-file-earmark" onClick={openSidebar}/>
                             <span className="page-name">{page.name}</span>
                         </div>

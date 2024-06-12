@@ -11,19 +11,15 @@ export function popUpSettings() {
     document.querySelector('.settings-popup').classList.toggle('active');
 }
 
-/**
- * Contains the html for the settings page, as well as form validation for updating page.
- */
-export default function Settings({ pages, page, updatePage }) {
+export default function Settings({ pages, page, updatePage, isUniquePageName }) {
 
-    // Not yet completed
-    // Client and server side validation using zod
+    // Client side form validation using zod
     const updatePageSchema = z.object({
         // Page name cannot exceed 50 characters
         name: z.string().max(50, 'Name must be shorter than 50 characters'),
 
         // Other form fields goes here
-        icon: z.string()
+        // icon: z.string()
 
     // Checks if given name already exists
     }).refine(data => !pages.map(p => p.name).includes(data.name), {
@@ -37,17 +33,34 @@ export default function Settings({ pages, page, updatePage }) {
         handleSubmit,
         formState: {errors, isSubmitting},
         reset,
-        getValues
-    } = useForm();
+        setError
+    } = useForm({
+        resolver: zodResolver(updatePageSchema)
+    });
 
     /**
      * Updates firestore with submitted data.
+     * Does server side validation.
      */
     const onSubmit = async (data) => {
         if (data.name != '') {
-            await updatePage(page, 'name', data.name);
+            if (await isUniquePageName(data)) {
+                try {
+                    await updatePage(page, 'name', data.name);
+                    reset();
+                } catch (err) {
+                    setError('root', {
+                        type: 'server',
+                        message: err.message
+                    });
+                }
+            } else {
+                setError('name', {
+                    type: 'server',
+                    message: 'Page name already exists'
+                });
+            }
         }
-        reset();
     };
 
     return (
@@ -73,14 +86,7 @@ export default function Settings({ pages, page, updatePage }) {
                         <label htmlFor="settings-page-name" className="col-sm-3 col-form-label">Page name</label>
                         <div className="col-sm-9">
                             <input id="settings-page-name" type="text" className="form-control" autoComplete="name" placeholder={page.name}
-                                {...register("name", {
-                                    maxLength: {
-                                        value: 50,
-                                        message: "Name must be shorter than 50 characters"
-                                    },
-                                    validate: value =>
-                                        !pages.map(p => p.name).includes(value) || "Page name already exists"
-                                })}
+                                {...register("name")} 
                             />
                             {errors.name && (
                                 <div className="alert alert-danger" role="alert">
@@ -91,9 +97,7 @@ export default function Settings({ pages, page, updatePage }) {
 
                         <label htmlFor="settings-page-icon" className="col-sm-3 col-form-label">Page icon</label>
                         <div className="col-sm-9">
-                            <input id="settings-page-icon" type="text" disabled className="form-control" placeholder="Coming soon"
-                                {...register("icon")}
-                            />
+                            <input id="settings-page-icon" type="text" disabled className="form-control" placeholder="Coming soon"/>
                         </div>
 
                         <div className="col-auto">

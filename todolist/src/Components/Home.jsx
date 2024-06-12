@@ -15,6 +15,10 @@ export const Home = () => {
     const [selectedPageData, setSelectedPageData] = useState(null);
     const [blocks, setBlocks] = useState([]);
 
+    // To handle animation for sidebar
+    const [newPage, setNewPage] = useState(null);
+    const [deletedPage, setDeletedPage] = useState(null);
+
     const navigate = useNavigate();
 
     const getUserDetails = async () => {
@@ -55,13 +59,12 @@ export const Home = () => {
 
     const handlePageSelect = (page) => {
         setSelectedPageData(page);
-        console.log(page);
     };
 
     /**
      * Adds a new page to current user with page name 'New Page'.
      * If 'New Page' already exists, use 'New Page(1)', 'New Page(2)', and so on.
-     * Navigates user to new page created.
+     * Returns new page data if successful.
      */
     const addPage = async () => {
         const defaultPageName = 'New Page';
@@ -90,7 +93,7 @@ export const Home = () => {
         }
 
         // The new page to be added to firestore once unique page name has been found.
-        const newPage = {
+        let np = {
             name: newPageName,
             createdOn: serverTimestamp(),
             lastEdited: serverTimestamp()
@@ -98,11 +101,12 @@ export const Home = () => {
 
         // Add newPage to firestore and update pages
         try {
-            const np = await addDoc(pageRef, newPage).then(doc => getDoc(doc));
-            setPages(prevPages => [{ ...np.data(), id: np.id }, ...prevPages]);
-
-            // Navigates user to new page created.
+            np = await addDoc(pageRef, np).then(doc => getDoc(doc));
+            np = { ...np.data(), id: np.id };
             setSelectedPageData(np);
+            setNewPage(np);
+            setPages(prevPages => [np, ...prevPages]);
+            return np;
         } catch (err) {
             console.error(err);
         }
@@ -113,6 +117,7 @@ export const Home = () => {
      * Deletes selected page from firestore.
      */
     const deletePage = async (page) => {
+        setDeletedPage(page);
         await deleteDoc(doc(database, 'Users', auth.currentUser.uid, 'Pages', page.id));
         setPages(prevPages => prevPages.filter(p => p.id != page.id));
     }
@@ -120,21 +125,28 @@ export const Home = () => {
     /**
      * Make changes to the specific page, where page.field = value.
      * Does not validate value.
-     * Handles exceptions by logging them in console.
+     * Does not handle exceptions.
      */
     const updatePage = async (page, field, value) => {
-        try {
-            await updateDoc(doc(database, 'Users', auth.currentUser.uid, 'Pages', page.id), {[field]: value});
-            setPages(prevPages => prevPages.map(p => {
-                if (p.id == page.id) {
-                    p[field] = value;
-                }
-                return p;
-            }));
-        } catch (err) {
-            console.error(err);
-        }
+        await updateDoc(doc(database, 'Users', auth.currentUser.uid, 'Pages', page.id), {[field]: value});
+        setPages(prevPages => prevPages.map(p => {
+            if (p.id == page.id) {
+                p[field] = value;
+            }
+            return p;
+        }));
     };
+
+    /**
+     * Checks if page name is already taken.
+     */
+    const isUniquePageName = async (name) => {
+        const arr = await getDocs(query(
+            collection(database, 'Users', auth.currentUser.uid, 'Pages'),
+            where('name', '==', name)
+        )).then(q => q.docs);
+        return arr.length == 0;
+    }
 
     const addBlock = async (heading, color) => {
         if (selectedPageData) {
@@ -175,8 +187,13 @@ export const Home = () => {
                         <Sidebar
                             user={userDetails}
                             pages={pages}
+                            selectedPage={selectedPageData}
+                            newPage={newPage}
+                            setNewPage={setNewPage}
+                            deletedPage={deletedPage}
+                            setDeletedPage={setDeletedPage}
                             handleLogout={handleLogout}
-                            onPageSelect={handlePageSelect}
+                            handlePageSelect={handlePageSelect}
                         />
                         
                         <div className="main-content">
@@ -187,7 +204,6 @@ export const Home = () => {
                                 addPage={addPage}
                                 selectedPage={selectedPageData}
                                 deletePage={deletePage}
-                                handlePageSelect={handlePageSelect}
                             />
 
                             {/* Load selected page info */}
@@ -213,6 +229,7 @@ export const Home = () => {
                             pages={pages}
                             page={selectedPageData}
                             updatePage={updatePage}
+                            isUniquePageName={isUniquePageName}
                         />
                     </div>
                 </>
