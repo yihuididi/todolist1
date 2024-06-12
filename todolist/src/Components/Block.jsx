@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, doc, getDocs, deleteDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, getDocs, deleteDoc, setDoc, query, orderBy } from 'firebase/firestore';
 import Task from './Task.jsx';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -13,8 +13,9 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
     const db = getFirestore();
 
     useEffect(() => {
+        //order task based on due date
         const fetchTasks = async () => {
-            const tasksSnapshot = await getDocs(collection(db, 'Users', 'userId', 'Pages', 'pageId', 'Blocks', block.id, 'Tasks'));
+            const tasksSnapshot = await getDocs(query(collection(db, 'Users', 'userId', 'Pages', 'pageId', 'Blocks', block.id, 'Tasks'), orderBy('dueDate')));
             setTasks(tasksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
         };
 
@@ -58,40 +59,34 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
         updateBlock(block.id, { color: e.target.value });
     };
 
+    //outlines the border based on color selected
+    const blockStyle = {
+        border: `2px solid ${block.color}`, 
+    };
+
     return (
         //Container of a block
-        <div className="block p-3 mb-3 border rounded">
+        <div className="block border rounded" style={{blockStyle}}>
 
             {/* div of block heading and color, with button to delete block */}
-            <div className="mb-3">
+            <div className="d-flex justify-content-between align-items-center p-2" style={{ backgroundColor: block.color}}>
                 <input 
+                    className="form-control me-2"
                     type="text" 
                     value={block.heading} 
                     onChange={handleBlockHeadingChange}
                     placeholder='Block has no name' 
+                    style = {{fontWeight: 'bold'}}
                 />
                 <input 
+                    className="form-control form-control-color me-4"
                     type="color" 
                     value={block.color} 
                     onChange={handleBlockColorChange} 
                 />
-                <button onClick={() => deleteBlock(block.id)}>Delete Block</button>
-            </div>
-
-            {/* Container with tasks, and add tasks form */}
-            <div className="tasks">
-                {tasks.map(task => (
-                    <Task 
-                        key={task.id} 
-                        task={task} 
-                        onDelete={() => deleteTask(task.id)} 
-                        onUpdate={(updatedTask) => updateTask(task.id, updatedTask)} 
-                    />
-                ))}
-
                 {/* Add task form */}
-                <>
-                    <Button variant="primary" onClick={() => setShow(true)}>
+                <div className="">
+                    <Button className="btn btn-primary btn-sm" style={{ fontSize: '1rem' }} onClick={() => setShow(true)}>
                         Add Task
                     </Button>
 
@@ -133,7 +128,25 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
                             <Button variant="primary" onClick={addTask}>Add Task</Button>
                         </Modal.Footer>
                     </Modal>
-                </>
+                </div>
+                <button onClick={() => deleteBlock(block.id)} className="btn btn-danger btn-sm ms-4">
+                    <i class="bi bi-clipboard-x me-1" ></i>
+                    <span style={{ fontSize: '1rem' }}>Delete Block</span>
+                </button>
+            </div>
+
+            {/* Container with tasks, and add tasks form */}
+            <div className="tasks">
+                {tasks.map(task => (
+                    <Task 
+                        key={task.id} 
+                        task={task} 
+                        onDelete={() => deleteTask(task.id)} 
+                        onUpdate={(updatedTask) => updateTask(task.id, updatedTask)} 
+                    />
+                ))}
+
+                
             </div>
         </div>
     );
