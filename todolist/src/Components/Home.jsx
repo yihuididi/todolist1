@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth, database } from '../firebase';
 import { collection, doc, addDoc, getDoc, getDocs, setDoc, deleteDoc, updateDoc, query, where,
-    orderBy, startAt, endAt, serverTimestamp } from 'firebase/firestore';
+    orderBy, startAt, endAt, serverTimestamp, writeBatch } from 'firebase/firestore';
 import Sidebar from './sidebar.jsx';
 import Utilitybar from './utilitybar.jsx';
 import Settings from './settings.jsx';
@@ -41,7 +41,8 @@ export const Home = () => {
     useEffect(() => {
         const fetchBlocks = async () => {
             if (selectedPageData) {
-                const blocksSnapshot = await getDocs(collection(database, 'Users', auth.currentUser.uid, 'Pages', selectedPageData.id, 'Blocks'));
+                // order the blocks by its order field
+                const blocksSnapshot = await getDocs(query(collection(database, 'Users', auth.currentUser.uid, 'Pages', selectedPageData.id, 'Blocks'), orderBy('order')));
                 setBlocks(blocksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
             }
         };
@@ -59,6 +60,32 @@ export const Home = () => {
 
     const handlePageSelect = (page) => {
         setSelectedPageData(page);
+    };
+
+    // Ensure block stays in place after being dragged
+    const handleOnDragEnd = async (result) => {
+        
+        // if drag block outside of container, return 
+        if (!result.destination) return;
+        
+        // create new array of reordered blocks
+        const reorderedBlocks = Array.from(blocks);
+        
+        // find and remove moved block from its orginal index in the reorderedBlocks array
+        const [reorderedBlock] = reorderedBlocks.splice(result.source.index, 1);
+        
+        // inject the block back into the array at destination index
+        reorderedBlocks.splice(result.destination.index, 0, reorderedBlock);
+
+        setBlocks(reorderedBlocks);
+
+        // update order of blocks in firestore
+        const batch = writeBatch(database);
+        reorderedBlocks.forEach((block, index) => {
+            const blockRef = doc(database, 'Users', auth.currentUser.uid, 'Pages', selectedPageData.id, 'Blocks', block.id);
+            batch.update(blockRef, { order: index });
+        });
+        await batch.commit();
     };
 
     /**
@@ -154,7 +181,8 @@ export const Home = () => {
             const newBlock = {
                 heading,
                 color,
-                tasks: []
+                tasks: [],
+                order: blocks.length
             };
             await setDoc(newBlockRef, newBlock);
             setBlocks([...blocks, { id: newBlockRef.id, ...newBlock }]);
@@ -213,6 +241,7 @@ export const Home = () => {
                                     addBlock={addBlock} 
                                     updateBlock={updateBlock} 
                                     deleteBlock={deleteBlock} 
+                                    onDragEnd={handleOnDragEnd}
                                 />
                             ) : (
                                 <h1>Select a page to view its content</h1>

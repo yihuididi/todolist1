@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Block from './Block.jsx';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Page = ({ blocks, addBlock, updateBlock, deleteBlock }) => {
+const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd }) => {
     const [newBlockHeading, setNewBlockHeading] = useState('');
     const [newBlockColor, setNewBlockColor] = useState('#FFFFFF');
 
@@ -37,13 +38,32 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock }) => {
                 </button>
             </div>
             {/* Container of blocks */}
-            <div className="blocks-container">
-                {blocks.map((block) => (
-                    <div className="card m-3" key={block.id} style={{border: `5px solid ${block.color}`, borderRadius: '0.25rem'}}>
-                        <Block block={block} updateBlock={updateBlock} deleteBlock={deleteBlock} />
-                    </div>
-                ))}
-            </div>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId='droppable'>
+                    {(provided) => {
+                        return (
+                            <div className="blocks-container" {...provided.droppableProps} ref={provided.innerRef}>
+                                {blocks.map((block, index) => (
+                                    <Draggable key={block.id} draggableId={block.id} index={index}>
+                                        {(provided) => (
+                                            <div 
+                                                className="card m-3" 
+                                                style={{border: `5px solid ${block.color}`, borderRadius: '0.25rem'}} 
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                            >
+                                                <Block block={block} updateBlock={updateBlock} deleteBlock={deleteBlock} />
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )
+                    }}
+                </Droppable>
+            </DragDropContext>
         </div>
     );
 };
