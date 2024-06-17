@@ -130,7 +130,7 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
                     </Modal>
                 </div>
                 <button onClick={() => deleteBlock(block.id)} className="btn btn-danger btn-sm ms-4">
-                    <i class="bi bi-clipboard-x me-1" ></i>
+                    <i className="bi bi-clipboard-x me-1" ></i>
                     <span style={{ fontSize: '1rem' }}>Delete Block</span>
                 </button>
             </div>

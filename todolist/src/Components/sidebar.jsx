@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import logo from '../Images/iconbeige.png';
+import Icon from '@mui/material/Icon';
 
 export default function Sidebar({user, pages, selectedPage, newPage, setNewPage, deletedPage, setDeletedPage, handleLogout, handlePageSelect}) {
     // Store pages locally
@@ -107,7 +108,9 @@ export default function Sidebar({user, pages, selectedPage, newPage, setNewPage,
                 {localPages.map(page => (
                     <li key={page.id} className='page' onClick={() => handlePageSelect(page)}>
                         <div id={page.id}>
-                            <i className="page-icon bi bi-file-earmark" onClick={openSidebar}/>
+                            <Icon className="page-icon" onClick={openSidebar}>
+                                {page.icon ? page.icon : 'description'}
+                            </Icon>
                             <span className="page-name">{page.name}</span>
                         </div>
                     </li>

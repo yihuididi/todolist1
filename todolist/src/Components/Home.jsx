@@ -95,6 +95,7 @@ export const Home = () => {
         // The new page to be added to firestore once unique page name has been found.
         let np = {
             name: newPageName,
+            icon: 'description',
             createdOn: serverTimestamp(),
             lastEdited: serverTimestamp()
         };
@@ -119,7 +120,7 @@ export const Home = () => {
     const deletePage = async (page) => {
         setDeletedPage(page);
         await deleteDoc(doc(database, 'Users', auth.currentUser.uid, 'Pages', page.id));
-        setPages(prevPages => prevPages.filter(p => p.id != page.id));
+        setPages(prevPages => prevPages.filter(p => p.id !== page.id));
     }
 
     /**
@@ -130,7 +131,7 @@ export const Home = () => {
     const updatePage = async (page, field, value) => {
         await updateDoc(doc(database, 'Users', auth.currentUser.uid, 'Pages', page.id), {[field]: value});
         setPages(prevPages => prevPages.map(p => {
-            if (p.id == page.id) {
+            if (p.id === page.id) {
                 p[field] = value;
             }
             return p;
@@ -145,7 +146,7 @@ export const Home = () => {
             collection(database, 'Users', auth.currentUser.uid, 'Pages'),
             where('name', '==', name)
         )).then(q => q.docs);
-        return arr.length == 0;
+        return arr.length === 0;
     }
 
     const addBlock = async (heading, color) => {
@@ -182,6 +183,8 @@ export const Home = () => {
                 <p>Loading...</p>
             ) : (
                 <>
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
                     <div className="home">
                         {/* Load sidebar */}
                         <Sidebar

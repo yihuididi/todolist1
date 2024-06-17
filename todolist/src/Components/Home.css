@@ -180,7 +180,7 @@
     color: rgba(24, 25, 30, 1) !important;
 }
 
-.home-sidebar .pagelist .page div i {
+.home-sidebar .pagelist .page div .page-icon {
     min-width: 50px;
     text-align: center;
     height: 50px;
@@ -281,11 +281,34 @@
     font-size: 15px;
 }
 
-.settings-popup form input {
-    margin: 10px 0px;
+.settings-popup form .page-icon .disabled {
+    background-color: #e9ecef;
+    opacity: 1;
+    cursor: default;
 }
 
-.settings-popup form button {
-    margin-top: 20px;
+.settings-popup form .dropdown-icons {
+    height: 0px;
+    overflow-y: scroll;
+    transition: all 0.5s ease;
+}
+
+.settings-popup form .dropdown-icons.active {
+    height: 400px;
+    padding-top: 4px;
+    transition: all 0.5s ease;
+}
+
+.settings-popup form .dropdown-icons ul li .name {
+    font-size: .8rem;
+    word-wrap: break-word;
+}
+
+.settings-popup form .dropdown-icons ul li .icon-display {
+    cursor: pointer;
+}
+
+.settings-popup form .btm button {
     margin-right: 15px;
 }
+

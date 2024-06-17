@@ -12,7 +12,7 @@ function App() {
   const [user, setUser] = useState()
   useEffect(() => {
     auth.onAuthStateChanged((user) => { 
-      //whe user logged in, auth changed, user set to true
+      //when user logged in, auth changed, user set to true
       setUser(user);
     });
   })
