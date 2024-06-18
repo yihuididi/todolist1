@@ -10,7 +10,6 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
     const [newTaskDueDate, setNewTaskDueDate] = useState('');
     const [newTaskExpReward, setNewTaskExpReward] = useState('');
     const [show, setShow] = useState(false);
-    //const [localHeading, setLocalHeading] = useState(block.heading);
     const db = getFirestore();
 
     useEffect(() => {
@@ -23,9 +22,6 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
         fetchTasks();
     }, [block.id, db]);
 
-    /*useEffect(() => {
-        setLocalHeading(block.heading);
-    }, [block.heading]);*/
 
     const addTask = async () => {
         const newTaskRef = doc(collection(db, 'Users', 'userId', 'Pages', 'pageId', 'Blocks', block.id, 'Tasks'));
@@ -57,7 +53,6 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
     };
 
     const handleBlockHeadingChange = (e) => {
-        //setLocalHeading(e.target.value);
         updateBlock(block.id, { heading: e.target.value });
     };
 
@@ -79,7 +74,6 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
                 <input 
                     className="form-control me-2"
                     type="text" 
-                    //value={localHeading} 
                     value={block.heading}
                     onChange={handleBlockHeadingChange}
                     placeholder='Block has no name' 
