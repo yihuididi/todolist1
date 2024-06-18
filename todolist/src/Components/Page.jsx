@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Block from './Block.jsx';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -6,16 +6,25 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd }) => {
     const [newBlockHeading, setNewBlockHeading] = useState('');
     const [newBlockColor, setNewBlockColor] = useState('#FFFFFF');
 
+    const addBlockFormRef = useRef();
+
     const handleAddBlock = () => {
         addBlock(newBlockHeading, newBlockColor);
         setNewBlockHeading('');
         setNewBlockColor('#FFFFFF');
     };
 
+    useEffect(() => {
+        addBlockFormRef.current.classList.remove('active');
+        setNewBlockHeading('');
+        setNewBlockColor('#FFFFFF');
+    }, [blocks]);
+
     return (
         <div className="page-content">
             {/* div to add block */}
             <div 
+                ref={addBlockFormRef}
                 className="add-block-form ps-5 pe-5 mb-3 d-flex align-items-center" 
                 style={{ backgroundColor: newBlockColor}}
             >

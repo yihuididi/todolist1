@@ -1,13 +1,18 @@
 import Icon from '@mui/material/Icon';
 import { iconNames } from '../Static/iconNames.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function isValidIcon(icon) {
     return iconNames.includes(icon);
 }
 
-export default function Icons({ selectIcon }) {
+export default function Icons({ selectIcon, page }) {
     const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        setSearch('');
+    }, [page]);
+
     return (
         <>
             <div className="d-flex mb-4 align-items-center">
@@ -23,11 +28,15 @@ export default function Icons({ selectIcon }) {
             </div>
 
             <ul className="row row-cols-3 row-cols-lg-4 list-unstyled">
-                {iconNames.filter(icon => search === '' ? true : icon.includes(search))
+                {iconNames.filter(name => search === '' ? true : name.includes(search))
                     .map(icon => (
                         <li key={icon} className="col mb-4">
-                            <div className="icon-display px-3 py-4 mb-2 bg-body-secondary text-center rounded" onClick={() => selectIcon(icon)}
-                                onMouseOver={e => e.target.style.color = "#1976d2"} onMouseOut={e => e.target.style.color = "inherit"}>
+                            <div
+                                className="icon-display px-3 py-4 mb-2 bg-body-secondary text-center rounded"
+                                onClick={() => selectIcon(icon)}
+                                onMouseOver={e => e.target.style.color = "#1976d2"}
+                                onMouseOut={e => e.target.style.color = "inherit"}
+                            >
                                 <Icon>{icon}</Icon>
                             </div>
                             <div className="name text-muted text-center pt-1">{icon}</div>

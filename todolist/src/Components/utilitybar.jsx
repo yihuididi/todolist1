@@ -1,11 +1,12 @@
-import { doc, getDoc } from 'firebase/firestore';
 import { Levels } from './levels.jsx';
 import { useState, useEffect } from 'react';
 import { popUpSettings } from './settings.jsx';
 
 function showNewBlockForm() {
-    document.querySelector('.home .page-content .add-block-form')
-        .classList.toggle('active');
+    const form = document.querySelector('.home .page-content .add-block-form');
+    if (form) {
+        form.classList.toggle('active');
+    }
 }
 
 export default function Utilitybar({ user, addPage, selectedPage, deletePage }) {

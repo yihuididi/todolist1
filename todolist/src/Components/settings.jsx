@@ -126,8 +126,8 @@ export default function Settings({ pages, page, updatePage, isUniquePageName }) 
                         <div className="align-items-center row mb-3">
                             <label htmlFor="settings-page-name" className="col-sm-3 col-form-label">Page name</label>
                             <div className="col-sm-9">
-                                <input id="settings-page-name" type="text" className="form-control" autoComplete="off" placeholder={page.name}
-                                    {...register("name")} 
+                                <input id="settings-page-name" type="text" className="form-control"
+                                    autoComplete="off" placeholder={page.name} {...register("name")} 
                                 />
                                 {errors.name && (
                                     <div className="alert alert-danger" role="alert">
@@ -145,10 +145,13 @@ export default function Settings({ pages, page, updatePage, isUniquePageName }) 
                                     <div className="input-group-text">
                                         <Icon style={{ fontSize: 18 }}>{pageIcon}</Icon>
                                     </div>
-                                    <input type="text" id="settings-page-icon" className="disabled form-control" autoComplete="off"
-                                        value={pageIcon} readOnly {...register("icon")}
+                                    <input type="text" id="settings-page-icon" className="disabled form-control"
+                                        autoComplete="off" value={pageIcon} readOnly {...register("icon")}
                                     />
-                                    <button type="button" onClick={toggleDropdownIcons} className="choose btn btn-outline-secondary">Choose</button>
+                                    <button type="button" onClick={toggleDropdownIcons}
+                                        className="choose btn btn-outline-secondary">
+                                        Choose
+                                    </button>
                                 </div>
                                 {errors.icon && (
                                     <div className="alert alert-danger" role="alert">
@@ -160,7 +163,7 @@ export default function Settings({ pages, page, updatePage, isUniquePageName }) 
 
                         {/* Dropdown for selecting new page icon */}
                         <div className="dropdown-icons container mb-3">
-                            <Icons selectIcon={selectIcon} />
+                            <Icons selectIcon={selectIcon} page={page} />
                         </div>
 
                         {/* Buttons for saving or closing settings form */}
