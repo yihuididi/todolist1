@@ -190,10 +190,10 @@ export const Home = () => {
         }
     };
 
-    const updateBlock = async (blockId, updatedBlock) => {
+    const updateBlock = (blockId, updatedBlock) => {
         if (selectedPageData) {
             const blockRef = doc(database, 'Users', auth.currentUser.uid, 'Pages', selectedPageData.id, 'Blocks', blockId);
-            await setDoc(blockRef, updatedBlock, { merge: true });
+            setDoc(blockRef, updatedBlock, { merge: true });
             setBlocks(blocks.map(block => block.id === blockId ? { ...block, ...updatedBlock } : block));
         }
     };
