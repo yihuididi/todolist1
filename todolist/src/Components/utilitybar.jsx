@@ -3,6 +3,11 @@ import { Levels } from './levels.jsx';
 import { useState, useEffect } from 'react';
 import { popUpSettings } from './settings.jsx';
 
+function showNewBlockForm() {
+    document.querySelector('.home .page-content .add-block-form')
+        .classList.toggle('active');
+}
+
 export default function Utilitybar({ user, addPage, selectedPage, deletePage }) {
     // List of utilites
     const [utils, setUtils] = useState([]);
@@ -76,13 +81,27 @@ export default function Utilitybar({ user, addPage, selectedPage, deletePage }) 
      * Creates html for changing settings of current page.
      */
     function pageSettings() {
-
         return {
             key: 'pageSettings',
             html:
                 <div className="settings">
                     <div className="util-btn" onClick={popUpSettings}>
                         <i className="bi bi-gear"/>
+                    </div>
+                </div>
+        }
+    }
+
+    /**
+     * Creates html for creating new block.
+     */
+    function createBlock() {
+        return {
+            key: 'createBlock',
+            html:
+                <div className="create-block">
+                    <div className="util-btn" onClick={showNewBlockForm}>
+                        <i className="bi bi-plus-circle"/>
                     </div>
                 </div>
         }
@@ -96,6 +115,7 @@ export default function Utilitybar({ user, addPage, selectedPage, deletePage }) 
         if (selectedPage) {
             utils.push(deleteSelectedPage(selectedPage));
             utils.push(pageSettings());
+            utils.push(createBlock());
         }
         setUtils(utils);
         return utils;

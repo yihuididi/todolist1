@@ -200,6 +200,7 @@
 /* ============================ CSS for utility bar ============================== */
 
 .home-utilities {
+    position: relative;
     font-weight: 500;
     font-size: 1.2rem;
     display: flex;
@@ -312,3 +313,19 @@
     margin-right: 15px;
 }
 
+/* ============================ CSS for utility bar ============================== */
+
+.home .page-content .add-block-form {
+    height: 0px;
+    opacity: 0;
+    border-top: solid 1px gray;
+    border-bottom: solid 1px gray;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.home .page-content .add-block-form.active {
+    height: 100px;
+    opacity: 1;
+    transition: all 0.5s ease;
+}

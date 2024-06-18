@@ -16,7 +16,7 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd }) => {
         <div className="page-content">
             {/* div to add block */}
             <div 
-                className="add-block-form ps-5 pe-5 pt-4 pb-4 mb-3 d-flex align-items-center" 
+                className="add-block-form ps-5 pe-5 mb-3 d-flex align-items-center" 
                 style={{ backgroundColor: newBlockColor}}
             >
                 <input 
