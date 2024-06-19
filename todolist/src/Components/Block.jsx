@@ -3,7 +3,7 @@ import { getFirestore, collection, doc, getDocs, deleteDoc, setDoc, query, order
 import Task from './Task.jsx';
 import { Modal, Button } from 'react-bootstrap';
 
-const Block = ({ block, updateBlock, deleteBlock }) => {
+const Block = ({ block, updateBlock, deleteBlock, onTaskCompleted}) => {
     const [tasks, setTasks] = useState([]);
     const [newTaskName, setNewTaskName] = useState('');
     const [newTaskCategory, setNewTaskCategory] = useState('');
@@ -143,7 +143,8 @@ const Block = ({ block, updateBlock, deleteBlock }) => {
                         key={task.id} 
                         task={task} 
                         onDelete={() => deleteTask(task.id)} 
-                        onUpdate={(updatedTask) => updateTask(task.id, updatedTask)} 
+                        onUpdate={(updatedTask) => updateTask(task.id, updatedTask)}
+                        onTaskCompleted={onTaskCompleted}
                     />
                 ))}
 

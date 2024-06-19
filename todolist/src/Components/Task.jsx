@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-const Task = ({ task, onDelete, onUpdate }) => {
+const Task = ({ task, onDelete, onUpdate, onTaskCompleted}) => {
     const [editing, setEditing] = useState(false);
     const [name, setName] = useState(task.name);
     const [category, setCategory] = useState(task.category);
@@ -12,6 +12,12 @@ const Task = ({ task, onDelete, onUpdate }) => {
         onUpdate({ name, category, dueDate, expReward, completed: task.completed });
         setEditing(false);
     };
+
+    const handleCompleteTask = () => {
+        onTaskCompleted(expReward); // Call the function in Home 
+        onDelete();
+    };
+
 
     return (
         <>
@@ -31,7 +37,8 @@ const Task = ({ task, onDelete, onUpdate }) => {
                         />
                         <label className="form-check-label">Completed</label>
                     </div>
-                    <Button variant="primary" onClick={() => setEditing(true)} size="sm">Edit</Button>
+                    <Button variant="success" size="sm" onClick={handleCompleteTask}>Completed</Button>
+                    <Button variant="primary" onClick={() => setEditing(true)} size="sm" className="ms-2">Edit</Button>
                     <Button variant="danger" onClick={onDelete} size="sm" className="ms-2">Delete</Button>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import { Levels } from './levels.jsx';
 import { useState, useEffect } from 'react';
 import { popUpSettings } from './settings.jsx';
+import { ProgressBar } from 'react-bootstrap';
 
 function showNewBlockForm() {
     const form = document.querySelector('.home .page-content .add-block-form');
@@ -133,6 +134,7 @@ export default function Utilitybar({ user, addPage, selectedPage, deletePage }) 
             {/* Username and EXP bar displayed on left */}
             <div className="user">
                 <span className="user-info">{user.username ? user.username : user.email}</span>
+                <ProgressBar now={(user.exp / 1000) * 100} label={`${user.exp} XP`} />
                 <Levels className="user-info" user={user} />
             </div>
 

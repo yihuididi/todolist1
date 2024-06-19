@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Block from './Block.jsx';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd }) => {
+const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd, onTaskCompleted }) => {
     const [newBlockHeading, setNewBlockHeading] = useState('');
     const [newBlockColor, setNewBlockColor] = useState('#FFFFFF');
 
@@ -62,7 +62,7 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd }) => {
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                             >
-                                                <Block block={block} updateBlock={updateBlock} deleteBlock={deleteBlock} />
+                                                <Block block={block} updateBlock={updateBlock} deleteBlock={deleteBlock} onTaskCompleted={onTaskCompleted}/>
                                             </div>
                                         )}
                                     </Draggable>

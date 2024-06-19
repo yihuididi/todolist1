@@ -14,6 +14,7 @@ export const Home = () => {
     const [pages, setPages] = useState([]);
     const [selectedPageData, setSelectedPageData] = useState(null);
     const [blocks, setBlocks] = useState([]);
+    const [userExp, setUserExp] = useState(0)
 
     // To handle animation for sidebar
     const [newPage, setNewPage] = useState(null);
@@ -27,9 +28,12 @@ export const Home = () => {
                 const userRef = doc(database, 'Users', user.uid);
                 const userDocs = await getDoc(userRef);
                 if (userDocs.exists()) {
+                    const xp = Number(userDocs.data().exp)
+                    setUserExp(xp)
                     setUserDetails(userDocs.data());
                     const userPages = await getDocs(query(collection(userRef, 'Pages'), orderBy('lastEdited', 'desc')));
                     setPages(userPages.docs.map(page => ({ ...page.data(), id: page.id })));
+                    
                 } else {
                     console.log('User not found');
                 }
@@ -205,6 +209,13 @@ export const Home = () => {
         }
     };
 
+    const handleTaskCompleted = async (expReward) => { 
+        const updatedExp = userExp + Number(expReward);
+        await updateDoc(doc(database, 'Users', auth.currentUser.uid), { exp: updatedExp });
+        setUserExp(updatedExp)
+        setUserDetails((prevDetails) => ({ ...prevDetails, exp: updatedExp }));
+    };
+
     return (
         <div>
             {!userDetails || !pages ? (
@@ -235,6 +246,7 @@ export const Home = () => {
                                 addPage={addPage}
                                 selectedPage={selectedPageData}
                                 deletePage={deletePage}
+                                userExp={userExp}
                             />
 
                             {/* Load selected page info */}
@@ -245,6 +257,7 @@ export const Home = () => {
                                     updateBlock={updateBlock} 
                                     deleteBlock={deleteBlock} 
                                     onDragEnd={handleOnDragEnd}
+                                    onTaskCompleted={handleTaskCompleted}
                                 />
                             ) : (
                                 <h1>Select a page to view its content</h1>
