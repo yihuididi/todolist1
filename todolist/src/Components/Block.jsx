@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { getFirestore, collection, doc, getDocs, deleteDoc, setDoc, query, orderBy } from 'firebase/firestore';
 import Task from './Task.jsx';
 import { Modal, Button } from 'react-bootstrap';
+import { Tooltip } from 'react-tooltip';
+import './Block.css'
 
 const Block = ({ block, updateBlock, deleteBlock, onTaskCompleted}) => {
     const [tasks, setTasks] = useState([]);
@@ -31,7 +33,7 @@ const Block = ({ block, updateBlock, deleteBlock, onTaskCompleted}) => {
             creationTime: new Date(),
             dueDate: newTaskDueDate,
             expReward: newTaskExpReward,
-            completed: false
+            handling: false
         };
         await setDoc(newTaskRef, newTask);
         setTasks([...tasks, { id: newTaskRef.id, ...newTask }]);
@@ -60,14 +62,9 @@ const Block = ({ block, updateBlock, deleteBlock, onTaskCompleted}) => {
         updateBlock(block.id, { color: e.target.value });
     };
 
-    //outlines the border based on color selected
-    const blockStyle = {
-        border: `2px solid ${block.color}`, 
-    };
-
     return (
         //Container of a block
-        <div className="block border rounded" style={{blockStyle}}>
+        <div className="block border rounded">
 
             {/* div of block heading and color, with button to delete block */}
             <div className="d-flex justify-content-between align-items-center p-2" style={{ backgroundColor: block.color}}>
@@ -80,16 +77,23 @@ const Block = ({ block, updateBlock, deleteBlock, onTaskCompleted}) => {
                     style = {{fontWeight: 'bold'}}
                 />
                 <input 
-                    className="form-control form-control-color me-4"
+                    className="form-control form-control-color me-2"
                     type="color" 
                     value={block.color} 
                     onChange={handleBlockColorChange} 
                 />
                 {/* Add task form */}
                 <div className="">
-                    <Button className="btn btn-primary btn-sm" style={{ fontSize: '1rem' }} onClick={() => setShow(true)}>
-                        Add Task
-                    </Button>
+
+                    <button 
+                        className="btn btn-primary btn-sm me-2" 
+                        onClick={() => setShow(true)} 
+                        data-tooltip-id="addTaskToolTip" data-tooltip-content="Add Task"
+                    >
+                        <i class="bi bi-file-plus"></i>
+                    </button>
+                    <Tooltip id="addTaskToolTip" />
+                    
 
                     <Modal show={show} onHide={() => setShow(false)}>
                         <Modal.Header closeButton>
@@ -130,10 +134,14 @@ const Block = ({ block, updateBlock, deleteBlock, onTaskCompleted}) => {
                         </Modal.Footer>
                     </Modal>
                 </div>
-                <button onClick={() => deleteBlock(block.id)} className="btn btn-danger btn-sm ms-4">
-                    <i className="bi bi-clipboard-x me-1" ></i>
-                    <span style={{ fontSize: '1rem' }}>Delete Block</span>
+                <button 
+                    className="btn btn-danger btn-sm me-2"
+                    onClick={() => deleteBlock(block.id)} 
+                    data-tooltip-id="deleteBlockToolTip" data-tooltip-content="Delete Block"
+                >
+                    <i class="bi bi-x-lg"></i>
                 </button>
+                <Tooltip id="deleteBlockToolTip"/>
             </div>
 
             {/* Container with tasks, and add tasks form */}

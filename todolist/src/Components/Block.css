@@ -1,0 +1,38 @@
+.blocks-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.block-item {
+    flex: 1 1 calc(33.333% - 20px); /* 3 blocks per row with spacing */
+    max-width: calc(33.333% - 20px);
+    box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+    .block-item {
+        flex: 1 1 calc(50% - 20px); /* 2 blocks per row on medium screens */
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 576px) {
+    .block-item {
+        flex: 1 1 100%; /* 1 block per row on small screens */
+        max-width: 100%;
+    }
+}
+
+.block .tasks {
+    padding: 10px;
+}
+
+.task.card {
+    margin-bottom: 10px;
+}
+
+.task .card-body {
+    padding: 10px;
+}

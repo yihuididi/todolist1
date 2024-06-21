@@ -9,7 +9,7 @@ const Task = ({ task, onDelete, onUpdate, onTaskCompleted}) => {
     const [expReward, setExpReward] = useState(task.expReward);
 
     const handleUpdate = () => {
-        onUpdate({ name, category, dueDate, expReward, completed: task.completed });
+        onUpdate({ name, category, dueDate, expReward, handling: task.handling });
         setEditing(false);
     };
 
@@ -32,10 +32,10 @@ const Task = ({ task, onDelete, onUpdate, onTaskCompleted}) => {
                         <input 
                             type="checkbox" 
                             className="form-check-input"
-                            checked={task.completed} 
-                            onChange={() => onUpdate({ completed: !task.completed })} 
+                            checked={task.handling} 
+                            onChange={() => onUpdate({ handling: !task.handling })} 
                         />
-                        <label className="form-check-label">Completed</label>
+                        <label className="form-check-label">Handling Task</label>
                     </div>
                     <Button variant="success" size="sm" onClick={handleCompleteTask}>Completed</Button>
                     <Button variant="primary" onClick={() => setEditing(true)} size="sm" className="ms-2">Edit</Button>

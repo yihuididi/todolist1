@@ -47,32 +47,43 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd, onTaskCom
                 </button>
             </div>
             {/* Container of blocks */}
-            <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId='droppable'>
-                    {(provided) => {
-                        return (
-                            <div className="blocks-container" {...provided.droppableProps} ref={provided.innerRef}>
-                                {blocks.map((block, index) => (
-                                    <Draggable key={block.id} draggableId={block.id} index={index}>
-                                        {(provided) => (
-                                            <div 
-                                                className="card m-3" 
-                                                style={{border: `5px solid ${block.color}`, borderRadius: '0.25rem'}} 
+            <div className="container">
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId='droppable' direction="horizontal">
+                        {(provided) => {
+                            return (
+                                <div className="blocks-container" {...provided.droppableProps} ref={provided.innerRef}>
+                                    {blocks.map((block, index) => (
+                                        <Draggable key={block.id} draggableId={block.id} index={index}>
+                                            {(provided) => (
+                                                <div
+                                                className="block-item"
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
-                                            >
-                                                <Block block={block} updateBlock={updateBlock} deleteBlock={deleteBlock} onTaskCompleted={onTaskCompleted}/>
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                        )
-                    }}
-                </Droppable>
-            </DragDropContext>
+                                                >
+                                                    <div
+                                                        className="card"
+                                                        style={{ border: `5px solid ${block.color}`, borderRadius: '0.25rem' }}
+                                                    >
+                                                        <Block 
+                                                            block={block} 
+                                                            updateBlock={updateBlock} 
+                                                            deleteBlock={deleteBlock} 
+                                                            onTaskCompleted={onTaskCompleted} 
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )
+                        }}
+                    </Droppable>
+                </DragDropContext>
+            </div>
         </div>
     );
 };
