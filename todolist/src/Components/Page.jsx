@@ -1,19 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, forwardRef } from 'react';
 import Block from './Block.jsx';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd, onTaskCompleted }) => {
-    const adjustPageHeight = () => {
-        const pageContent = document.querySelector('.home .page-content');
-        const mainContent = document.querySelector('.home .main-content');
-        const homeUtilities = document.querySelector('.home .home-utilities');
-
-        if (pageContent && mainContent && homeUtilities) {
-            pageContent.style.height = mainContent.clientHeight - homeUtilities.clientHeight + 'px';
-        }
-    }
-    window.addEventListener('resize', adjustPageHeight);
-
+const Page = forwardRef(({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd, onTaskCompleted }, ref) => {
     const [newBlockHeading, setNewBlockHeading] = useState('');
     const [newBlockColor, setNewBlockColor] = useState('#FFFFFF');
 
@@ -23,18 +12,16 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd, onTaskCom
         addBlock(newBlockHeading, newBlockColor);
         setNewBlockHeading('');
         setNewBlockColor('#FFFFFF');
-        adjustPageHeight();
     };
 
     useEffect(() => {
         addBlockFormRef.current.classList.remove('active');
         setNewBlockHeading('');
         setNewBlockColor('#FFFFFF');
-        adjustPageHeight();
     }, [blocks]);
 
     return (
-        <div className="page-content">
+        <div ref={ref} className="page-content">
             {/* div to add block */}
             <div 
                 ref={addBlockFormRef}
@@ -99,7 +86,7 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd, onTaskCom
             </div>
         </div>
     );
-};
+});
 
 export default Page;
 

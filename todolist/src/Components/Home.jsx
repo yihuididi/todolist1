@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { auth, database } from '../firebase';
 import { collection, doc, addDoc, getDoc, getDocs, setDoc, deleteDoc, updateDoc, query, where,
     orderBy, startAt, endAt, serverTimestamp, writeBatch } from 'firebase/firestore';
@@ -21,6 +21,20 @@ export const Home = () => {
     const [newPage, setNewPage] = useState(null);
     const [deletedPage, setDeletedPage] = useState(null);
 
+    // To handle page height
+    const homeUtilitiesRef = useRef();
+    const pageContentRef = useRef();
+
+    /**
+     * Adjust .page-content height.
+     */
+    const adjustPageHeight = () => {
+        if (homeUtilitiesRef.current && pageContentRef.current) {
+            pageContentRef.current.style.height = window.innerHeight
+                - homeUtilitiesRef.current.clientHeight + 'px';
+        }
+    };
+
     const navigate = useNavigate();
 
     const getUserDetails = async () => {
@@ -41,7 +55,16 @@ export const Home = () => {
             }
         });
     };
-    useEffect(() => {getUserDetails()}, []);
+
+    useEffect(() => {
+        getUserDetails()
+        adjustPageHeight();
+        window.addEventListener('resize', adjustPageHeight);
+
+        return () => {
+            window.removeEventListener('resize', adjustPageHeight);
+        };
+    }, []);
 
     useEffect(() => {
         const fetchBlocks = async () => {
@@ -54,6 +77,7 @@ export const Home = () => {
             }
         };
         fetchBlocks();
+        adjustPageHeight();
     }, [selectedPageData]);
 
     const handleLogout = async () => {
@@ -256,6 +280,7 @@ export const Home = () => {
 
                             {/* Load top utility bar */}
                             <Utilitybar
+                                ref={homeUtilitiesRef}
                                 user={userDetails}
                                 addPage={addPage}
                                 selectedPage={selectedPageData}
@@ -266,6 +291,7 @@ export const Home = () => {
                             {/* Load selected page info */}
                             {selectedPageData ? (
                                 <Page 
+                                    ref={pageContentRef}
                                     blocks={blocks} 
                                     addBlock={addBlock} 
                                     updateBlock={updateBlock} 

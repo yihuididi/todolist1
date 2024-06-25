@@ -1,5 +1,5 @@
 import { Levels } from './levels.jsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { popUpSettings } from './settings.jsx';
 import { ProgressBar } from 'react-bootstrap';
 
@@ -10,7 +10,7 @@ function showNewBlockForm() {
     }
 }
 
-export default function Utilitybar({ user, addPage, selectedPage, deletePage }) {
+export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage }, ref) => {
     // List of utilites
     const [utils, setUtils] = useState([]);
 
@@ -129,7 +129,7 @@ export default function Utilitybar({ user, addPage, selectedPage, deletePage }) 
     }, [selectedPage]);
 
     return (
-        <div className="home-utilities">
+        <div ref={ref} className="home-utilities">
 
             {/* Username and EXP bar displayed on left */}
             <div className="user">
@@ -154,4 +154,6 @@ export default function Utilitybar({ user, addPage, selectedPage, deletePage }) 
 
         </div>
     );
-}
+});
+
+export default Utilitybar;
