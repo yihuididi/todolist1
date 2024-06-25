@@ -1,38 +1,62 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Icons, { isValidIcon } from './icons.jsx';
+import Wallpaper, { isValidWallpaper } from './wallpaper.jsx';
 import Icon from '@mui/material/Icon';
 
 export function popUpSettings() {
     document.querySelector('.home').classList.toggle('blur');
+    document.querySelector('.wallpaper').classList.toggle('blur');
     document.querySelector('.settings-popup').classList.toggle('active');
-}
-
-function toggleDropdownIcons() {
-    document.querySelector('.settings-popup form .choose').classList.toggle('active');
-    document.querySelector('.settings-popup form .dropdown-icons').classList.toggle('active');
 }
 
 export default function Settings({ pages, page, updatePage, isUniquePageName }) {
 
-    const [pageIcon, setPageIcon] = useState('');
-    useEffect(() => {
-        if (page) {
-            setPageIcon(page.icon);
+    // References for form elements
+    const chooseIcon = useRef();
+    const dropdownIcon = useRef();
+    const chooseWallpaper = useRef();
+    const dropdownWallpaper = useRef();
+
+    /**
+     * Toggle the selected dropdown to active.
+     */
+    const selectDropdown = dropdown => {
+        if (dropdown === 'icon') {
+            chooseWallpaper.current.classList.remove('active');
+            dropdownWallpaper.current.classList.remove('active');
+            chooseIcon.current.classList.toggle('active');
+            dropdownIcon.current.classList.toggle('active');
         }
-    }, [page?.icon]);
+
+        if (dropdown === 'wallpaper') {
+            chooseIcon.current.classList.remove('active');
+            dropdownIcon.current.classList.remove('active');
+            chooseWallpaper.current.classList.toggle('active');
+            dropdownWallpaper.current.classList.toggle('active');
+        }
+    };
+
+    // States representing the values in input fields
+    const [pageIcon, setPageIcon] = useState('');
+    const [pageWallpaper, setPageWallpaper] = useState('');
 
     useEffect(() => {
         reset();
+        if (page) {
+            setPageIcon(page.icon);
+            setPageWallpaper(page.wallpaper);
+        }
     }, [page]);
 
     // Client side form validation using zod
     const updatePageSchema = z.object({
         // Page name cannot exceed 50 characters
         name: z.string().max(50, 'Name must be shorter than 50 characters'),
-        icon: z.string()
+        icon: z.string(),
+        wallpaper: z.string()
 
     // Checks if given name already exists
     }).refine(data => !pages.map(p => p.name).includes(data.name), {
@@ -57,6 +81,10 @@ export default function Settings({ pages, page, updatePage, isUniquePageName }) 
         setValue('icon', icon);
     };
 
+    const selectWallpaper = (wallpaper) => {
+        setPageWallpaper(wallpaper);
+        setValue('wallpaper', wallpaper);
+    };
 
     /**
      * Updates firestore with submitted data.
@@ -97,6 +125,25 @@ export default function Settings({ pages, page, updatePage, isUniquePageName }) 
                 setError('icon', {
                     type: 'server',
                     message: 'Icon does not exists'
+                });
+            }
+        }
+
+        if (data.wallpaper != page.wallpaper) {
+            if (isValidWallpaper(data.wallpaper)) {
+                try {
+                    await updatePage(page, 'wallpaper', data.wallpaper);
+                    reset();
+                } catch (err) {
+                    setError('root', {
+                        type: 'server',
+                        message: err.message
+                    });
+                }
+            } else {
+                setError('wallpaper', {
+                    type: 'server',
+                    message: 'Wallpaper does not exists'
                 });
             }
         }
@@ -148,7 +195,7 @@ export default function Settings({ pages, page, updatePage, isUniquePageName }) 
                                     <input type="text" id="settings-page-icon" className="disabled form-control"
                                         autoComplete="off" value={pageIcon} readOnly {...register("icon")}
                                     />
-                                    <button type="button" onClick={toggleDropdownIcons}
+                                    <button ref={chooseIcon} type="button" onClick={() => selectDropdown('icon')}
                                         className="choose btn btn-outline-secondary">
                                         Choose
                                     </button>
@@ -162,8 +209,34 @@ export default function Settings({ pages, page, updatePage, isUniquePageName }) 
                         </div>
 
                         {/* Dropdown for selecting new page icon */}
-                        <div className="dropdown-icons container mb-3">
+                        <div ref={dropdownIcon} className="settings-dropdown container">
                             <Icons selectIcon={selectIcon} page={page} />
+                        </div>
+
+                        {/* Input for changing page wallpaper */}
+                        <div className="page-wallpaper align-items-center row mb-3">
+                            <label htmlFor="settings-page-wallpaper" className="col-sm-3 col-form-label">Page wallpaper</label>
+                            <div className="col-sm-9">
+                                <div className="input-group">
+                                    <input type="text" id="settings-page-wallpaper" className="disabled form-control"
+                                        autoComplete="off" value={pageWallpaper} readOnly {...register("wallpaper")}
+                                    />
+                                    <button ref={chooseWallpaper} type="button" onClick={() => selectDropdown('wallpaper')}
+                                        className="choose btn btn-outline-secondary">
+                                        Choose
+                                    </button>
+                                </div>
+                                {errors.icon && (
+                                    <div className="alert alert-danger" role="alert">
+                                        {`${errors.wallpaper.message}`}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Dropdown for selecting new page wallpaper */}
+                        <div ref={dropdownWallpaper} className="settings-dropdown container">
+                            <Wallpaper selectWallpaper={selectWallpaper} />
                         </div>
 
                         {/* Buttons for saving or closing settings form */}

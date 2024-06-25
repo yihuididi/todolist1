@@ -11,12 +11,26 @@
 
 .home .main-content {
     position: relative;
-    background-color: #eee;
+    background-color: transparent;
     top: 0;
     left: 80px;
     transition: all 0.5s ease;
     width: calc(100% - 80px);
     height: 100vh;
+}
+
+.wallpaper {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 2560px;
+    aspect-ratio: 16 / 9;
+}
+
+.wallpaper.blur {
+    filter: blur(5px);
+    transition: all 0.5s ease;
 }
 
 .home-sidebar.active ~ .main-content {
@@ -201,21 +215,25 @@
 
 .home-utilities {
     position: relative;
+    color: white;
     font-weight: 500;
     font-size: 1.2rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 10px 5%;
-    background-color: #fafafa;
-}
-
-.home-utilities .user {
-    margin-right: auto;
+    background-color: transparent;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    background-image: linear-gradient(
+        120deg,
+        rgba(41, 73, 106, 0.4),
+        rgba(0, 0, 0, 0.2)
+    );
 }
 
 .home-utilities .user .user-info {
-    margin-right:  2rem;
+    margin-right: 2rem;
 }
 
 .home-utilities .utilities ul {
@@ -251,6 +269,8 @@
     color: inherit;
 }
 
+/* ============================ CSS for home settings ============================== */
+
 .settings-popup {
     position: fixed;
     top: 45%;
@@ -282,31 +302,52 @@
     font-size: 15px;
 }
 
-.settings-popup form .page-icon .disabled {
+.settings-popup form .disabled {
     background-color: #e9ecef;
     opacity: 1;
     cursor: default;
 }
 
-.settings-popup form .dropdown-icons {
+.settings-popup form .settings-dropdown {
     height: 0px;
     overflow-y: scroll;
     transition: all 0.5s ease;
 }
 
-.settings-popup form .dropdown-icons.active {
+.settings-popup form .settings-dropdown.active {
     height: 400px;
     padding-top: 4px;
     transition: all 0.5s ease;
 }
 
-.settings-popup form .dropdown-icons ul li .name {
+.settings-popup form .settings-dropdown ul li .name {
     font-size: .8rem;
     word-wrap: break-word;
 }
 
-.settings-popup form .dropdown-icons ul li .icon-display {
+.settings-popup form .settings-dropdown ul li .display {
+    position: relative;
     cursor: pointer;
+}
+
+.settings-popup form .settings-dropdown ul li .display .filter {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, .4);
+    transition: all 0.2s ease-in-out;
+}
+
+.settings-popup form .settings-dropdown ul li .display .filter:hover {
+    opacity: 1;
+}
+
+.settings-popup form .settings-dropdown ul li img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: cover;
+    border-radius: 10px;
 }
 
 .settings-popup form .btm button {
@@ -314,6 +355,32 @@
 }
 
 /* ============================ CSS for page content ============================== */
+
+.home .page-content {
+    background-color: transparent;
+    overflow-y: scroll;
+}
+
+.home .page-content::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.home .page-content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.home .page-content::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.home .page-content::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(40, 40, 40, 0.3);
+}
 
 .home .page-content .add-block-form {
     height: 0px;

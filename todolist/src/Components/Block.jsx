@@ -90,7 +90,7 @@ const Block = ({ block, updateBlock, deleteBlock, onTaskCompleted}) => {
                         onClick={() => setShow(true)} 
                         data-tooltip-id="addTaskToolTip" data-tooltip-content="Add Task"
                     >
-                        <i class="bi bi-file-plus"></i>
+                        <i className="bi bi-file-plus"></i>
                     </button>
                     <Tooltip id="addTaskToolTip" />
                     
@@ -139,7 +139,7 @@ const Block = ({ block, updateBlock, deleteBlock, onTaskCompleted}) => {
                     onClick={() => deleteBlock(block.id)} 
                     data-tooltip-id="deleteBlockToolTip" data-tooltip-content="Delete Block"
                 >
-                    <i class="bi bi-x-lg"></i>
+                    <i className="bi bi-x-lg"></i>
                 </button>
                 <Tooltip id="deleteBlockToolTip"/>
             </div>

@@ -6,6 +6,7 @@ import Sidebar from './sidebar.jsx';
 import Utilitybar from './utilitybar.jsx';
 import Settings from './settings.jsx';
 import Page from './Page.jsx';
+import { randomWallpaper, getImage } from './wallpaper.jsx';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
@@ -48,10 +49,12 @@ export const Home = () => {
                 // order the blocks by its order field
                 const blocksSnapshot = await getDocs(query(collection(database, 'Users', auth.currentUser.uid, 'Pages', selectedPageData.id, 'Blocks'), orderBy('order')));
                 setBlocks(blocksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+            } else {
+                homepage();
             }
         };
         fetchBlocks();
-    }, [selectedPageData?.id]);
+    }, [selectedPageData]);
 
     const handleLogout = async () => {
         try {
@@ -93,6 +96,13 @@ export const Home = () => {
     };
 
     /**
+     * Renders the page for when no page is selected.
+     */
+    const homepage = () => {
+
+    }
+
+    /**
      * Adds a new page to current user with page name 'New Page'.
      * If 'New Page' already exists, use 'New Page(1)', 'New Page(2)', and so on.
      * Returns new page data if successful.
@@ -128,7 +138,8 @@ export const Home = () => {
             name: newPageName,
             icon: 'description',
             createdOn: serverTimestamp(),
-            lastEdited: serverTimestamp()
+            lastEdited: serverTimestamp(),
+            wallpaper: randomWallpaper()
         };
 
         // Add newPage to firestore and update pages
@@ -224,6 +235,9 @@ export const Home = () => {
                 <>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
+                    <img className="wallpaper"
+                        src={selectedPageData ? getImage(selectedPageData.wallpaper) : getImage(randomWallpaper())}/>
+
                     <div className="home">
                         {/* Load sidebar */}
                         <Sidebar
@@ -285,4 +299,3 @@ export const Home = () => {
 };
 
 export default Home;
-

@@ -32,7 +32,7 @@ export default function Icons({ selectIcon, page }) {
                     .map(icon => (
                         <li key={icon} className="col mb-4">
                             <div
-                                className="icon-display px-3 py-4 mb-2 bg-body-secondary text-center rounded"
+                                className="display px-3 py-4 mb-2 bg-body-secondary text-center rounded"
                                 onClick={() => selectIcon(icon)}
                                 onMouseOver={e => e.target.style.color = "#1976d2"}
                                 onMouseOut={e => e.target.style.color = "inherit"}

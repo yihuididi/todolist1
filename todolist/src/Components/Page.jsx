@@ -3,6 +3,17 @@ import Block from './Block.jsx';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd, onTaskCompleted }) => {
+    const adjustPageHeight = () => {
+        const pageContent = document.querySelector('.home .page-content');
+        const mainContent = document.querySelector('.home .main-content');
+        const homeUtilities = document.querySelector('.home .home-utilities');
+
+        if (pageContent && mainContent && homeUtilities) {
+            pageContent.style.height = mainContent.clientHeight - homeUtilities.clientHeight + 'px';
+        }
+    }
+    window.addEventListener('resize', adjustPageHeight);
+
     const [newBlockHeading, setNewBlockHeading] = useState('');
     const [newBlockColor, setNewBlockColor] = useState('#FFFFFF');
 
@@ -12,12 +23,14 @@ const Page = ({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd, onTaskCom
         addBlock(newBlockHeading, newBlockColor);
         setNewBlockHeading('');
         setNewBlockColor('#FFFFFF');
+        adjustPageHeight();
     };
 
     useEffect(() => {
         addBlockFormRef.current.classList.remove('active');
         setNewBlockHeading('');
         setNewBlockColor('#FFFFFF');
+        adjustPageHeight();
     }, [blocks]);
 
     return (

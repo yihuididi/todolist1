@@ -138,6 +138,11 @@ export default function Utilitybar({ user, addPage, selectedPage, deletePage }) 
                 <Levels className="user-info" user={user} />
             </div>
 
+            {/* Displays the name of the page selected */}
+            <div className="page-name">
+                {selectedPage ? selectedPage.name : ""}
+            </div>
+
             {/* List out utilities as icons on right */}
             <div className="utilities">
                 <ul>
