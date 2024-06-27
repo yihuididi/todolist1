@@ -54,7 +54,7 @@ export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage 
                         */}
 
                         {/* Temporary code */}
-                        <li>To be implemented...</li>
+                        <li>Implementing...</li>
 
                     </ul>
                 </div>
