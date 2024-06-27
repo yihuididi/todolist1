@@ -257,8 +257,8 @@
 
 .home-utilities .utilities .dropdown-menu li {
     cursor: pointer;
-    padding: 5px 20px;
     width: 100%;
+    font-size: 0.75rem; 
 }
 
 .home-utilities .utilities .dropdown-menu li:hover {
