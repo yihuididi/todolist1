@@ -9,6 +9,20 @@ import Page from './Page.jsx';
 import { randomWallpaper, getImage } from './wallpaper.jsx';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
+import Default from './default.jsx';
+
+const setWallpaper = (page) => {
+    const body = document.querySelector('body');
+    if (page) {
+        body.style.backgroundImage = `url(${getImage(page.wallpaper)})`;
+        body.style.backgroundRepeat = 'no-repeat';
+        body.style.backgroundPosition = 'center';
+        body.style.backgroundAttachment = 'fixed';
+        body.style.backgroundSize = 'cover';
+    } else {
+        body.style.backgroundImage = 'none';
+    }
+};
 
 export const Home = () => {
     const [userDetails, setUserDetails] = useState();
@@ -24,9 +38,10 @@ export const Home = () => {
     // To handle page height
     const homeUtilitiesRef = useRef();
     const pageContentRef = useRef();
+    const homeDefaultRef = useRef();
 
     /**
-     * Adjust .page-content height.
+     * Adjust the height of .page-content div.
      */
     const adjustPageHeight = () => {
         if (homeUtilitiesRef.current && pageContentRef.current) {
@@ -72,12 +87,11 @@ export const Home = () => {
                 // order the blocks by its order field
                 const blocksSnapshot = await getDocs(query(collection(database, 'Users', auth.currentUser.uid, 'Pages', selectedPageData.id, 'Blocks'), orderBy('order')));
                 setBlocks(blocksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-            } else {
-                homepage();
             }
         };
         fetchBlocks();
         adjustPageHeight();
+        setWallpaper(selectedPageData);
     }, [selectedPageData]);
 
     const handleLogout = async () => {
@@ -118,13 +132,6 @@ export const Home = () => {
         });
         await batch.commit();
     };
-
-    /**
-     * Renders the page for when no page is selected.
-     */
-    const homepage = () => {
-
-    }
 
     /**
      * Adds a new page to current user with page name 'New Page'.
@@ -252,15 +259,12 @@ export const Home = () => {
     };
 
     return (
-        <div>
+        <>
             {!userDetails || !pages ? (
                 <p>Loading...</p>
             ) : (
                 <>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-
-                    <img className="wallpaper"
-                        src={selectedPageData ? getImage(selectedPageData.wallpaper) : getImage(randomWallpaper())}/>
 
                     <div className="home">
                         {/* Load sidebar */}
@@ -300,7 +304,9 @@ export const Home = () => {
                                     onTaskCompleted={handleTaskCompleted}
                                 />
                             ) : (
-                                <h1>Select a page to view its content</h1>
+                                <Default
+                                    addPage={addPage}
+                                />
                             )}
 
                         </div>
@@ -319,7 +325,7 @@ export const Home = () => {
                     </div>
                 </>
             )}
-        </div>
+        </>
         
     );
 };

@@ -8,7 +8,6 @@ import Icon from '@mui/material/Icon';
 
 export function popUpSettings() {
     document.querySelector('.home').classList.toggle('blur');
-    document.querySelector('.wallpaper').classList.toggle('blur');
     document.querySelector('.settings-popup').classList.toggle('active');
 }
 
