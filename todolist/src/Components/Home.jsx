@@ -20,7 +20,12 @@ const setWallpaper = (page) => {
         body.style.backgroundAttachment = 'fixed';
         body.style.backgroundSize = 'cover';
     } else {
-        body.style.backgroundImage = 'none';
+        body.style.backgroundImage = `url(${getImage(randomWallpaper())})`;
+        body.style.backgroundRepeat = 'no-repeat';
+        body.style.backgroundPosition = 'center';
+        body.style.backgroundAttachment = 'fixed';
+        body.style.backgroundSize = 'cover';
+
     }
 };
 

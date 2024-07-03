@@ -389,18 +389,27 @@
 /* ============================ CSS for default page ============================== */
 
 .home .home-default {
-    margin: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    padding: 30px;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     font-size: 1.7rem;
     font-family: 'VT323';
+    background-color: #88959B;
+    border-style: solid;
+    border-width: 5px;
+    border-top-color: #6B767B;
+    border-left-color: #6B767B;
 }
 
-.home .home-default .pixel {
+.home .home-default .pixel-btn {
     margin-bottom: 20px;
-    width: 50%;
+    width: 65%;
     max-width: 500px;
     color: white;
     cursor: pointer;
@@ -424,11 +433,11 @@
     border-image: url(https://i.imgur.com/sREM8Yn.png) 20 stretch;
 }
 
-.home .home-default .pixel:active {
+.home .home-default .pixel-btn:active {
     transform: translateY(2px);
 }
 
-.home .home-default .pixel p {
+.home .home-default .pixel-btn p {
     margin: -20px -20px;
     line-height: 30px;
     padding: 10px 20px;

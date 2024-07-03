@@ -4,7 +4,7 @@ export const Default = ({ addPage }) => {
         <>
             <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet" type="text/css"/>
             <div className="home-default">
-                <div className="pixel" onClick={addPage}>
+                <div className="pixel-btn" onClick={addPage}>
                     <p>Create new page</p>
                 </div>
 
