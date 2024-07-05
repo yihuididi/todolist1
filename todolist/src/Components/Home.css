@@ -203,6 +203,7 @@
 
 .home-utilities {
     position: relative;
+    z-index: 1;
     color: white;
     font-weight: 500;
     font-size: 1.2rem;
@@ -244,9 +245,9 @@
 }
 
 .home-utilities .utilities .dropdown-menu li {
+    padding: 5px 20px;
     cursor: pointer;
     width: 100%;
-    font-size: 0.75rem; 
 }
 
 .home-utilities .utilities .dropdown-menu li:hover {

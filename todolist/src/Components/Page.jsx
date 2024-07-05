@@ -21,7 +21,7 @@ const Page = forwardRef(({ blocks, addBlock, updateBlock, deleteBlock, onDragEnd
     }, [blocks]);
 
     return (
-        <div ref={ref} className="page-content mt-2">
+        <div ref={ref} className="page-content">
             {/* div to add block */}
             <div 
                 ref={addBlockFormRef}
