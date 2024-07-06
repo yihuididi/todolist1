@@ -18,7 +18,8 @@ export const CreateAccount = () => {
             const user = auth.currentUser
             if (user) {
                 await setDoc(doc(database, "Users", user.uid), { //store user uid in database named Users
-                    email: user.email
+                    email: user.email,
+                    exp: 0
                 })
             }
             toast.success("Account Created!")

@@ -1,5 +1,4 @@
-import { Levels } from './levels.jsx';
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect, useRef, forwardRef } from 'react';
 import { popUpSettings } from './settings.jsx';
 import { ProgressBar } from 'react-bootstrap';
 
@@ -13,6 +12,21 @@ function showNewBlockForm() {
 export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage }, ref) => {
     // List of utilites
     const [utils, setUtils] = useState([]);
+
+    // User's exp
+    const [exp, setExp] = useState(0);
+    const expBarRef = useRef();
+
+    const setExpBar = (xp) => {
+        if (expBarRef.current) {
+            expBarRef.current.style.setProperty('--exp-bar-width', xp % 100);
+        }
+    };
+
+    useEffect(() => {
+        setExp(user.exp);
+        setExpBar(user.exp);
+    }, [user.exp]);
 
     /**
      * Creates html for creating a new page.
@@ -129,30 +143,39 @@ export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage 
     }, [selectedPage]);
 
     return (
-        <div ref={ref} className="home-utilities">
+        <>
+            <link href="https://fonts.googleapis.com/css?family=Bebas+Neue" rel="stylesheet" type="text/css"/>
+            <div ref={ref} className="home-utilities">
 
-            {/* Username and EXP bar displayed on left */}
-            <div className="user">
-                <span className="user-info">{user.username ? user.username : user.email}</span>
-                <ProgressBar now={(user.exp / 1000) * 100} label={`${user.exp} XP`} />
-                <Levels className="user-info" user={user} />
+                {/* Username and EXP bar displayed on left */}
+                <div className="user">
+                    <div className="user-level">
+                        <div className="level">Lvl</div>
+                        <div className="number"> {Math.floor(user.exp / 100)}</div>
+                    </div>
+                    <div className="user-info">
+                        <div className="username">{user.username ? user.username : user.email}</div>
+                        <div ref={expBarRef} className="exp-bar" data-exp={user.exp % 100}/>
+                        {/* <ProgressBar now={(user.exp / 1000) * 100} label={`${user.exp} XP`} /> */}
+                    </div>
+                </div>
+
+                {/* Displays the name of the page selected */}
+                <div className="page-name">
+                    {selectedPage ? selectedPage.name : ""}
+                </div>
+
+                {/* List out utilities as icons on right */}
+                <div className="utilities">
+                    <ul>
+                        {utils?.map(util => (
+                            <li key={util.key}>{util.html}</li>
+                        ))}
+                    </ul>
+                </div>
+
             </div>
-
-            {/* Displays the name of the page selected */}
-            <div className="page-name">
-                {selectedPage ? selectedPage.name : ""}
-            </div>
-
-            {/* List out utilities as icons on right */}
-            <div className="utilities">
-                <ul>
-                    {utils?.map(util => (
-                        <li key={util.key}>{util.html}</li>
-                    ))}
-                </ul>
-            </div>
-
-        </div>
+        </>
     );
 });
 

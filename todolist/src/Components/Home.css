@@ -1,3 +1,7 @@
+:root {
+    --exp-bar-width: 0;
+}
+
 .home {
     transition: all 0.5s ease;
 }
@@ -205,7 +209,6 @@
     position: relative;
     z-index: 1;
     color: white;
-    font-weight: 500;
     font-size: 1.2rem;
     display: flex;
     justify-content: space-between;
@@ -221,8 +224,60 @@
     );
 }
 
+.home-utilities .user {
+    display: flex;
+    align-items: center;
+}
+
+.home-utilities .user .user-level {
+    font-family: 'Bebas Neue';
+    margin-right: 10px;
+}
+
+.home-utilities .user .user-level .level {
+    display: inline;
+    font-size: .95rem;
+}
+
+.home-utilities .user .user-level .number {
+    display: inline;
+    font-size: 2rem;
+}
+
 .home-utilities .user .user-info {
-    margin-right: 2rem;
+    display: flex;
+    font-size: .95rem;
+    flex-direction: column;
+}
+
+.home-utilities .user .user-info .exp-bar {
+    position: relative;
+    width: 200px;
+    height: 0.8em;
+    background-color: rgb(45, 45, 45);
+    border-radius: 1.5em;
+    color: white;
+}
+
+.home-utilities .user .user-info .exp-bar::before {
+    content: attr(data-exp);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: .45em;
+    top: .3em;
+    bottom: .3em;
+    width: calc(var(--exp-bar-width, 0) * 1%);
+    max-width: calc(100% - 1em);
+    background-color: #069;
+    border-radius: 1em;
+    font-size: .5em;
+    padding-left: 1em;
+    transition: all 0.5s ease;
+}
+
+.home-utilities .page-name {
+    font-weight: 500;
 }
 
 .home-utilities .utilities ul {
@@ -387,6 +442,11 @@
     transition: all 0.5s ease;
 }
 
+.home .page-content .blocks-container .block-item .card .block .d-flex {
+    position: relative;
+    z-index: 1;
+}
+
 /* ============================ CSS for default page ============================== */
 
 .home .home-default {
@@ -394,6 +454,7 @@
     margin-right: auto;
     margin-top: 10%;
     padding: 30px;
+    width: 80%;
     max-width: 800px;
     display: flex;
     flex-direction: column;
