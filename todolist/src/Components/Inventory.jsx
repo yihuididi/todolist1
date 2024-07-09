@@ -1,7 +1,7 @@
 import './Inventory.css';
 import { useState, useEffect } from 'react';
 import { auth, database } from '../firebase';
-import { collection, doc, getDocs, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, getDoc, updateDoc, addDoc } from 'firebase/firestore';
 import itemMap from '../Static/items.js';
 import stone from '../Static/inventory-page/stone.png';
 import arrow from '../Static/inventory-page/arrow.png';
@@ -12,10 +12,12 @@ export const Inventory = ({ user }) => {
     // Data of players inventory
     const [inventory, setInventory] = useState([]);
 
+    // Get inventory data of users.
+    // If user has not Inventory collection (i.e. a new user), create the collection for the user.
     const getInventory = async () => {
         const inventoryRef = collection(database, 'Users', user.uid, 'Inventory');
-        if (inventoryRef) {
-            const data = await getDocs(inventoryRef);
+        const data = await getDocs(inventoryRef);
+        if (data.docs.length > 0) {
             const arr = await Promise.all(data.docs.map(async doc => {
                 let slot = { ...doc.data(), id: doc.id };
                 if (slot.item) {
@@ -27,6 +29,13 @@ export const Inventory = ({ user }) => {
             }));
             setInventory(arr);
             setLoading(false);
+        } else {
+            for (let i = 0; i < 30; i++) {
+                await addDoc(inventoryRef, {
+                    item: false
+                });
+            }
+            getInventory();
         }
     };
 
@@ -117,10 +126,12 @@ export const Inventory = ({ user }) => {
             {loading ? document.body.style.setProperty('cursor', 'wait') : document.body.style.setProperty('cursor', 'auto')}
             <link href="https://fonts.googleapis.com/css?family=Tangerine" rel="stylesheet" type="text/css"/>
             <div className="inventory-page">
-                <a className="back-btn" href="/home">
-                    <img className="arrow" src={arrow} />
-                    <img className="stone" src={stone} />
-                </a>
+                <div className="top-bar">
+                    <a className="back-btn" href="/home">
+                        <img className="arrow" src={arrow} />
+                        <img className="stone" src={stone} />
+                    </a>
+                </div>
 
                 <div className="dashboard">
                     <div className="cursive">Inventory</div>

@@ -2,26 +2,26 @@ body {
     background-color: rgb(192, 168, 127) !important;
 }
 
-.inventory-page .back-btn {
-    position: absolute;
+.inventory-page .top-bar .back-btn {
+    position: relative;
     cursor: pointer;
 }
 
-.inventory-page .back-btn .arrow {
+.inventory-page .top-bar .back-btn .arrow {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotate(180deg);
+    transform: translate(-50%, -40%) rotate(180deg);
     width: 60%;
     height: auto;
 }
 
-.inventory-page .back-btn .stone {
+.inventory-page .top-bar .back-btn .stone {
     width: 100px;
     height: auto;
 }
 
-.inventory-page .back-btn:hover .arrow {
+.inventory-page .top-bar .back-btn:hover .arrow {
     filter: grayscale(20%);
 }
 
@@ -38,19 +38,22 @@ body {
 }
 
 .inventory-page .dashboard .cursive {
+    text-align: center;
     font-family: 'Tangerine';
     font-size: 3rem;
     font-weight: 800;
     color: rgb(137, 100, 39);
+    background-color: rgba(63, 48, 22, 0.8);
+    border: solid 5px rgb(63, 48, 22);
 }
 
 .inventory-page .dashboard .contain {
     width: 100%;
     height: 100%;
-    border: solid 5px rgb(63, 48, 22);
     display: grid;
     grid-template-columns: 1fr 1fr;
     background-color: rgba(63, 48, 22, 0.3);
+    border: solid 5px rgb(63, 48, 22);
 }
 
 .inventory-page .dashboard .contain .inventory {
@@ -61,6 +64,19 @@ body {
     grid-auto-rows: min-content;
     gap: 3px;
     justify-content: center;
+}
+
+.inventory-page .dashboard .contain .inventory::-webkit-scrollbar {
+    width: .7em;
+}
+
+.inventory-page .dashboard .contain .inventory::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+}
+
+.inventory-page .dashboard .contain .inventory::-webkit-scrollbar-thumb {
+    background-color: rgba(63, 48, 22, 0.5);
+    outline: 1px solid rgb(63, 48, 22);
 }
 
 .inventory-page .dashboard .contain .inventory-slot {
