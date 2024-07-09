@@ -1,5 +1,5 @@
 import Icon from '@mui/material/Icon';
-import { iconNames } from '../Static/iconNames.js';
+import iconNames from '../Static/iconNames.js';
 import { useState, useEffect } from 'react';
 
 export function isValidIcon(icon) {

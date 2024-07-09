@@ -1,0 +1,83 @@
+body {
+    background-color: rgb(192, 168, 127) !important;
+}
+
+.inventory-page .back-btn {
+    position: absolute;
+    cursor: pointer;
+}
+
+.inventory-page .back-btn .arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(180deg);
+    width: 60%;
+    height: auto;
+}
+
+.inventory-page .back-btn .stone {
+    width: 100px;
+    height: auto;
+}
+
+.inventory-page .back-btn:hover .arrow {
+    filter: grayscale(20%);
+}
+
+.inventory-page .dashboard {
+    position: absolute;
+    width: 55%;
+    max-width: 900px;
+    min-width: 500px;
+    aspect-ratio: 3 / 2;
+    min-height: 400px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.inventory-page .dashboard .cursive {
+    font-family: 'Tangerine';
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgb(137, 100, 39);
+}
+
+.inventory-page .dashboard .contain {
+    width: 100%;
+    height: 100%;
+    border: solid 5px rgb(63, 48, 22);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: rgba(63, 48, 22, 0.3);
+}
+
+.inventory-page .dashboard .contain .inventory {
+    display: grid;
+    padding: 15px;
+    overflow-y: auto;
+    grid-template-columns: repeat(auto-fit, 50px);
+    grid-auto-rows: min-content;
+    gap: 3px;
+    justify-content: center;
+}
+
+.inventory-page .dashboard .contain .inventory-slot {
+    width: 50px;
+    aspect-ratio: 1 / 1;
+    background-color: rgb(63, 48, 22);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inventory-page .dashboard .contain .inventory-slot .inventory-item {
+    width: 40px;
+    height: auto;
+    cursor: grab;
+}
+
+.inventory-page .dashboard .contain .equip {
+    border-left: solid 5px rgb(63, 48, 22);
+}

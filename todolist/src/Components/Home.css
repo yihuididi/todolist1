@@ -231,7 +231,6 @@
 
 .home-utilities .user .user-level {
     font-family: 'Bebas Neue';
-    margin-right: 10px;
 }
 
 .home-utilities .user .user-level .level {
@@ -246,8 +245,15 @@
 
 .home-utilities .user .user-info {
     display: flex;
+    margin-left: 10px;
     font-size: .95rem;
     flex-direction: column;
+}
+
+@media only screen and (max-width: 750px) {
+    .home-utilities .user .user-info {
+        display: none;
+    }
 }
 
 .home-utilities .user .user-info .exp-bar {
@@ -278,6 +284,12 @@
 
 .home-utilities .page-name {
     font-weight: 500;
+}
+
+@media only screen and (max-width: 1000px) {
+    .home-utilities .page-name {
+        display: none;
+    }
 }
 
 .home-utilities .utilities ul {

@@ -84,7 +84,7 @@ export default function Sidebar({user, pages, selectedPage, newPage, setNewPage,
 
                 <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
                    <li>
-                       <a className="dropdown-item" href="">Settings</a>
+                       <a className="dropdown-item" href="/home/inventory">Inventory</a>
                    </li>
 
                    <li>

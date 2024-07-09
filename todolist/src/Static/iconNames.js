@@ -932,3 +932,5 @@ export const iconNames = [
     "zoom_out",
     "zoom_out_map"
 ];
+
+export default iconNames;

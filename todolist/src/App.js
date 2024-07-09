@@ -2,6 +2,7 @@ import './App.css';
 import { CreateAccount } from './Components/CreateAccount.jsx';
 import { Login } from './Components/Login.jsx';
 import { Home } from './Components/Home.jsx';
+import Inventory from './Components/Inventory.jsx';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { auth } from './firebase'
@@ -25,6 +26,7 @@ function App() {
           <Route path='/create-account' element={<CreateAccount />}/>
           <Route path='/login' element={<Login />}/>
           <Route path='/home' element={<Home />}/>
+          <Route path='/home/inventory' element={<Inventory user={user}/>}/>
         </Routes>
         <ToastContainer />
     </BrowserRouter>
