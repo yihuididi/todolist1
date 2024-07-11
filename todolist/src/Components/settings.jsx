@@ -11,7 +11,7 @@ export function popUpSettings() {
     document.querySelector('.settings-popup').classList.toggle('active');
 }
 
-export default function Settings({ pages, page, updatePage, isUniquePageName }) {
+export default function Settings({ pages, page, updatePage, isUniquePageName, setWallpaper }) {
 
     // References for form elements
     const chooseIcon = useRef();
@@ -132,6 +132,7 @@ export default function Settings({ pages, page, updatePage, isUniquePageName }) 
             if (isValidWallpaper(data.wallpaper)) {
                 try {
                     await updatePage(page, 'wallpaper', data.wallpaper);
+                    setWallpaper(page);
                     reset();
                 } catch (err) {
                     setError('root', {

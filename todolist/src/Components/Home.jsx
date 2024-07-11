@@ -326,6 +326,7 @@ export const Home = () => {
                             page={selectedPageData}
                             updatePage={updatePage}
                             isUniquePageName={isUniquePageName}
+                            setWallpaper={setWallpaper}
                         />
                     </div>
                 </>
