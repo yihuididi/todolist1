@@ -527,3 +527,23 @@
                       radial-gradient(circle at 0 100%, rgba(204, 0, 0, 0) 14px, #000000 15px);
 }
 
+/* ============================ CSS for Mystery Box ============================== */
+
+.mystery-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url('../Static/MysteryBox.png') no-repeat center center;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.mystery-box p {
+    text-align: center;
+    margin-top: 70px;
+    color: #fff;
+    font-weight: bold;
+}

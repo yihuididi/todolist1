@@ -35,6 +35,8 @@ export const Home = () => {
     const [selectedPageData, setSelectedPageData] = useState(null);
     const [blocks, setBlocks] = useState([]);
     const [userExp, setUserExp] = useState(0)
+    const [showMysteryBox, setShowMysteryBox] = useState(false);
+    const [openBox, setOpenBox] = useState(false);
 
     // To handle animation for sidebar
     const [newPage, setNewPage] = useState(null);
@@ -258,9 +260,41 @@ export const Home = () => {
 
     const handleTaskCompleted = async (expReward) => { 
         const updatedExp = userExp + Number(expReward);
+        if (Math.floor(userExp / 100) < Math.floor(updatedExp / 100)) {
+            handleLevelUp();
+        }
         await updateDoc(doc(database, 'Users', auth.currentUser.uid), { exp: updatedExp });
         setUserExp(updatedExp)
         setUserDetails((prevDetails) => ({ ...prevDetails, exp: updatedExp }));
+    };
+
+    const handleLevelUp = async () => {
+        setShowMysteryBox(true);
+    };
+
+    const openMysteryBox = async () => {
+        const itemsRef = collection(database, 'Items');
+        const itemsSnapshot = await getDocs(itemsRef);
+        const items = itemsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        const randomItem = items[Math.floor(Math.random() * items.length)];
+
+        const inventoryRef = collection(database, 'Users', auth.currentUser.uid, 'Inventory');
+        const inventorySnapshot = await getDocs(inventoryRef);
+
+        const emptySlot = inventorySnapshot.docs.find(doc => !doc.data().item);
+        if (emptySlot) {
+            await updateDoc(doc(inventoryRef, emptySlot.id), {
+                item: true,
+                itemRef: doc(itemsRef, randomItem.id),
+                level: 1,
+            });
+        }
+
+        setShowMysteryBox(false); 
+        setTimeout(() => {
+            navigate('/home/inventory'); // Navigate to the inventory page
+        }, 3000);
     };
 
     return (
@@ -329,6 +363,11 @@ export const Home = () => {
                             setWallpaper={setWallpaper}
                         />
                     </div>
+                    {showMysteryBox && (
+                        <div className="mystery-box" onClick={openMysteryBox}>
+                            <p>Click to open your mystery box!</p>
+                        </div>
+                    )}
                 </>
             )}
         </>
