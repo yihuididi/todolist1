@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import Default from './default.jsx';
 import anime from 'animejs';
+import { toast } from "react-toastify"
 
 const setWallpaper = (page) => {
     const body = document.querySelector('body');
@@ -290,11 +291,21 @@ export const Home = () => {
                 itemRef: doc(itemsRef, randomItem.id),
                 level: 1,
             });
+            setShowMysteryBox(false); 
+            navigate('/home/inventory'); // Navigate to the inventory page
+        } else {
+            toast.error('Inventory full, please clear your inventory', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setShowMysteryBox(false); 
+            navigate('/home/inventory');
         }
-
-        setShowMysteryBox(false); 
-        navigate('/home/inventory'); // Navigate to the inventory page
-        
     };
 
     return (
