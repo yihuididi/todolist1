@@ -10,6 +10,7 @@ import { randomWallpaper, getImage } from './wallpaper.jsx';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import Default from './default.jsx';
+import anime from 'animejs';
 
 const setWallpaper = (page) => {
     const body = document.querySelector('body');
@@ -36,7 +37,7 @@ export const Home = () => {
     const [blocks, setBlocks] = useState([]);
     const [userExp, setUserExp] = useState(0)
     const [showMysteryBox, setShowMysteryBox] = useState(false);
-    const [openBox, setOpenBox] = useState(false);
+    
 
     // To handle animation for sidebar
     const [newPage, setNewPage] = useState(null);
@@ -292,9 +293,8 @@ export const Home = () => {
         }
 
         setShowMysteryBox(false); 
-        setTimeout(() => {
-            navigate('/home/inventory'); // Navigate to the inventory page
-        }, 3000);
+        navigate('/home/inventory'); // Navigate to the inventory page
+        
     };
 
     return (
@@ -364,8 +364,10 @@ export const Home = () => {
                         />
                     </div>
                     {showMysteryBox && (
-                        <div className="mystery-box" onClick={openMysteryBox}>
-                            <p>Click to open your mystery box!</p>
+                        <div className="mystery-box-overlay">
+                            <div className="mystery-box" onClick={openMysteryBox}>
+                                <p>Click to open your mystery box!</p>
+                            </div>
                         </div>
                     )}
                 </>

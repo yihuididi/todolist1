@@ -45,7 +45,7 @@ export const Login = () => {
           <button type="submit" className={styles.loginformbutton}>Login</button> 
           <br />
           <br />
-          <Link to="/create-account" className={styles.linktocreateaccount}>Dont't have an account?</Link>
+          <Link to="/create-account" className={styles.linktocreateaccount}>Don't have an account?</Link>
         </form>
     </div>
   )
