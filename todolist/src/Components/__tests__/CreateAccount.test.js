@@ -1,19 +1,18 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import CreateAccount from '../CreateAccount.jsx';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { auth, database } from '../../firebase';
-import { mocked } from 'ts-jest/utils';
 
 jest.mock('firebase/auth', () => ({
     createUserWithEmailAndPassword: jest.fn()
 }));
 
-jest.mock('firebase/auth', () => ({
+jest.mock('firebase/firestore', () => ({
     setDoc: jest.fn(),
-    doc: jest.fn(() => 'mockDoc')
+    doc: jest.fn()
 }));
 
 jest.mock('react-toastify', () => ({
@@ -39,6 +38,7 @@ describe('CreateAccount', () => {
     const mockPassword = '12345678';
 
     beforeEach(() => {
+        createUserWithEmailAndPassword.mockClear();
         render(
             <MemoryRouter>
                 <CreateAccount />
@@ -54,8 +54,7 @@ describe('CreateAccount', () => {
     });
 
     test('handles successful account creation', async () => {
-        console.log(createUserWithEmailAndPassword);
-        createUserWithEmailAndPassword.mockResolvedValueOnce({
+        createUserWithEmailAndPassword.mockResolvedValue({
             user: {
                 uid: mockUid,
                 email: mockEmail
@@ -66,12 +65,26 @@ describe('CreateAccount', () => {
         fireEvent.change(screen.getByLabelText('Password:'), { target: { value: mockPassword } });
         fireEvent.click(screen.getByRole('button', {name: 'Create Account'}));
 
-        await screen.findByText('Account Created!');
-        expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(auth.currentUser, mockEmail, mockPassword);
-        expect(setDoc).toHaveBeenCalledWith('mockDoc', {
-            email: mockEmail,
-            exp: 0
+        await waitFor(() => {
+            expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(auth, mockEmail, mockPassword);
+        });
+        await waitFor(() => {
+            expect(setDoc).toHaveBeenCalledWith(doc(database, 'Users', mockUid), {
+                email: mockEmail,
+                exp: 0
+            });
         });
         expect(toast.success).toHaveBeenCalledWith('Account Created!');
+    });
+
+    test('handles account creation error', async () => {
+        const errorMessage = 'Error creating account';
+        createUserWithEmailAndPassword.mockRejectedValue(new Error(errorMessage));
+
+        fireEvent.change(screen.getByLabelText('Email:'), { target: { value: mockEmail } });
+        fireEvent.change(screen.getByLabelText('Password:'), { target: { value: mockPassword } });
+        fireEvent.click(screen.getByRole('button', {name: 'Create Account'}));
+
+        await waitFor(() => expect(toast.error).toHaveBeenCalledWith(errorMessage));
     });
 });
