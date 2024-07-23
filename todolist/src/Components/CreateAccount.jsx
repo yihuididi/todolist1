@@ -36,17 +36,17 @@ export const CreateAccount = () => {
         <form className={styles.createaccountform} onSubmit={handleSubmit}>
             <h2 className={styles.createaccountformh2}>Create Account</h2>
             <div className={styles.createaccountformtitle}>
-                <label htmlFor="email" className={styles.createaccountformlabel}>
+                <label htmlFor="create-account-email" className={styles.createaccountformlabel}>
                     Email:
                 </label>
-                <input type="text" className={styles.createaccountforminput} onChange={(event) => setEmail(event.target.value)} />
+                <input id="create-account-email" type="text" className={styles.createaccountforminput} onChange={(event) => setEmail(event.target.value)} />
             </div>
             <br />
             <div className={styles.createaccountformtitle}>
-                <label htmlFor="password" className={styles.createaccountformlabel}>
+                <label htmlFor="create-account-password" className={styles.createaccountformlabel}>
                     Password:
                 </label>
-                <input type="password" className={styles.createaccountforminput} onChange={(event) => setPassword(event.target.value)}/>
+                <input id="create-account-password" type="password" className={styles.createaccountforminput} onChange={(event) => setPassword(event.target.value)}/>
             </div>
             <br />
             <br />
