@@ -65,12 +65,12 @@ export default function Sidebar({user, pages, selectedPage, newPage, setNewPage,
     }, [localPages]);
 
     return (
-        <div className="home-sidebar">
+        <div className="home-sidebar" role="navigation">
 
             {/* Containes todolist icon and sidebar collapse button */}
             <div className="top">
                 <img className="app-logo" src={logo} alt="Logo"/>
-                <i className="collapse-btn bi bi-list" onClick={toggleSidebar}/>
+                <i className="collapse-btn bi bi-list" onClick={toggleSidebar} role="button" aria-label="collapse-btn"/>
             </div>
 
             <hr/>

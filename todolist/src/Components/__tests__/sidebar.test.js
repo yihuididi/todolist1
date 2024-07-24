@@ -41,4 +41,25 @@ describe('sidebar', () => {
         expect(screen.getByText(mockEmail)).toBeInTheDocument();
         mockPages.forEach(page => expect(screen.getByText(page.name)).toBeInTheDocument());
     });
+
+    test('toggles sidebar on collapse button click', () => {
+        fireEvent.click(screen.getByRole('button', { name: /collapse-btn/i }));
+        expect(screen.getByRole('navigation')).toHaveClass('active');
+    });
+
+    test('handles page selection', () => {
+        fireEvent.click(screen.getByText(mockPages[0].name));
+        expect(mockHandlePageSelect).toHaveBeenCalledWith(mockPages[0]);
+    });
+
+    test('handles logout', () => {
+        fireEvent.click(screen.getByText('Signout'));
+        expect(mockHandleLogout).toHaveBeenCalled();
+    });
+
+    test('renders inventory link with correct href', () => {
+        const inventory = screen.getByText('Inventory');
+        expect(inventory).toBeInTheDocument();
+        expect(inventory).toHaveAttribute('href', '/home/inventory');
+    });
 });

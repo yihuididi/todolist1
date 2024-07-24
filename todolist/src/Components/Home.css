@@ -207,7 +207,7 @@
 
 .home-utilities {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     color: white;
     font-size: 1.2rem;
     display: flex;

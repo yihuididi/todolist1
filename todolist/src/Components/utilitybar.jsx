@@ -40,7 +40,7 @@ export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage 
                         <i className="bi bi-file-earmark-plus"/>
                     </div>
                     <ul className="dropdown-menu">
-                        <li onClick={addPage}>Create new page</li>
+                        <li onClick={addPage} role="button" aria-label="addPage">Create new page</li>
                     </ul>
                 </div>
         };
@@ -87,7 +87,7 @@ export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage 
                         <i className="bi bi-trash"/>
                     </div>
                     <ul className="dropdown-menu">
-                        <li onClick={() => deletePage(selectedPage)}>Delete page</li>
+                        <li onClick={() => deletePage(selectedPage)} role="button" aria-label="delPage">Delete page</li>
                     </ul>
                 </div>
         };
@@ -101,7 +101,7 @@ export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage 
             key: 'pageSettings',
             html:
                 <div className="settings">
-                    <div className="util-btn" onClick={popUpSettings}>
+                    <div className="util-btn" onClick={popUpSettings} role="button" aria-label="popUpSettings">
                         <i className="bi bi-gear"/>
                     </div>
                 </div>
@@ -116,7 +116,7 @@ export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage 
             key: 'createBlock',
             html:
                 <div className="create-block">
-                    <div className="util-btn" onClick={showNewBlockForm}>
+                    <div className="util-btn" onClick={showNewBlockForm} role="button" aria-label="showNewBlockForm">
                         <i className="bi bi-plus-circle"/>
                     </div>
                 </div>
@@ -155,8 +155,7 @@ export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage 
                     </div>
                     <div className="user-info">
                         <div className="username">{user.username ? user.username : user.email}</div>
-                        <div ref={expBarRef} className="exp-bar" data-exp={user.exp % 100}/>
-                        {/* <ProgressBar now={(user.exp / 1000) * 100} label={`${user.exp} XP`} /> */}
+                        <div ref={expBarRef} className="exp-bar" data-exp={user.exp % 100} data-testid="exp-bar"/>
                     </div>
                 </div>
 
@@ -169,7 +168,7 @@ export const Utilitybar = forwardRef(({ user, addPage, selectedPage, deletePage 
                 <div className="utilities">
                     <ul>
                         {utils?.map(util => (
-                            <li key={util.key}>{util.html}</li>
+                            <li key={util.key} role="button" aria-label={util.key}>{util.html}</li>
                         ))}
                     </ul>
                 </div>
