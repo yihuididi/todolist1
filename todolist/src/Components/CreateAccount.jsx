@@ -23,10 +23,8 @@ export const CreateAccount = () => {
                 })
             }
             toast.success("Account Created!")
-            console.log("Create Account Successful")
         } catch(err) {
             toast.error(err.message)
-            console.log(err.message)
         }
     }
 

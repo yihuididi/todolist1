@@ -46,7 +46,7 @@ describe('CreateAccount', () => {
         );
     });
 
-    test('renders CreateAccount component', () => {
+    test('renders CreateAccount form', () => {
         expect(screen.getByRole('button', {name: 'Create Account'})).toBeInTheDocument();
         expect(screen.getByLabelText('Email:')).toBeInTheDocument();
         expect(screen.getByLabelText('Password:')).toBeInTheDocument();
