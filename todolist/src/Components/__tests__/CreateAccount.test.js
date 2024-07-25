@@ -77,7 +77,7 @@ describe('CreateAccount', () => {
         expect(toast.success).toHaveBeenCalledWith('Account Created!');
     });
 
-    test('handles account creation error', async () => {
+    test('handles account creation error', () => {
         const errorMessage = 'Error creating account';
         createUserWithEmailAndPassword.mockRejectedValue(new Error(errorMessage));
 
@@ -85,6 +85,6 @@ describe('CreateAccount', () => {
         fireEvent.change(screen.getByLabelText('Password:'), { target: { value: mockPassword } });
         fireEvent.click(screen.getByRole('button', {name: 'Create Account'}));
 
-        await waitFor(() => expect(toast.error).toHaveBeenCalledWith(errorMessage));
+        waitFor(() => expect(toast.error).toHaveBeenCalledWith(errorMessage));
     });
 });

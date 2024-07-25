@@ -209,7 +209,7 @@ export default function Settings({ pages, page, updatePage, isUniquePageName, se
                         </div>
 
                         {/* Dropdown for selecting new page icon */}
-                        <div ref={dropdownIcon} className="settings-dropdown container">
+                        <div ref={dropdownIcon} className="settings-dropdown container" data-testid="dropdown-icons">
                             <Icons selectIcon={selectIcon} page={page} />
                         </div>
 
@@ -235,7 +235,7 @@ export default function Settings({ pages, page, updatePage, isUniquePageName, se
                         </div>
 
                         {/* Dropdown for selecting new page wallpaper */}
-                        <div ref={dropdownWallpaper} className="settings-dropdown container">
+                        <div ref={dropdownWallpaper} className="settings-dropdown container" data-testid="dropdown-wallpaper">
                             <Wallpaper selectWallpaper={selectWallpaper} />
                         </div>
 

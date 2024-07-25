@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Utilitybar from '../utilitybar.jsx';
 import { popUpSettings } from '../settings.jsx';
@@ -110,4 +110,23 @@ describe('utilitybar with no selected page', () => {
         );
         expect(screen.getByRole('button', { name: /deletepage/i })).toBeInTheDocument();
     });
+});
+
+test('toggles form visibility when create block button is clicked', () => {
+    document.body.innerHTML = '<div class="home"><div class="page-content"><div class="add-block-form"></div></div></div>';
+    render(
+        <MemoryRouter>
+            <Utilitybar
+                user={mockUser}
+                addPage={mockAddPage}
+                selectedPage={mockSelectedPage}
+                deletePage={mockDeletePage}
+            />
+        </MemoryRouter>
+    );
+
+    const form = document.querySelector('.home .page-content .add-block-form');
+    expect(form).not.toHaveClass('active');
+    fireEvent.click(screen.getByRole('button', { name: /shownewblockform/i }));
+    expect(form).toHaveClass('active');
 });

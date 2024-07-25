@@ -39,14 +39,14 @@ describe('Login', () => {
         expect(screen.getByText("Don't have an account?")).toBeInTheDocument();
     });
 
-    test('handles successful login', async () => {
+    test('handles successful login', () => {
         signInWithEmailAndPassword.mockResolvedValue({});
 
         fireEvent.change(screen.getByLabelText('Email:'), { target: { value: mockEmail } });
         fireEvent.change(screen.getByLabelText('Password:'), { target: { value: mockPassword } });
         fireEvent.click(screen.getByRole('button', {name: 'Login'}));
 
-        await waitFor(() => {
+        waitFor(() => {
             expect(signInWithEmailAndPassword).toHaveBeenCalledWith(auth, mockEmail, mockPassword);
         });
     });
@@ -59,6 +59,6 @@ describe('Login', () => {
         fireEvent.change(screen.getByLabelText('Password:'), { target: { value: mockPassword } });
         fireEvent.click(screen.getByRole('button', {name: 'Login'}));
 
-        await waitFor(() => expect(toast.error).toHaveBeenCalledWith(errorMessage));
+        waitFor(() => expect(toast.error).toHaveBeenCalledWith(errorMessage));
     });
 });
