@@ -42,7 +42,7 @@ const mockUseForm = {
     setValue: jest.fn()
 };
 
-describe('Settings', () => {
+describe('settings', () => {
     beforeEach(() => {
         useForm.mockReturnValue(mockUseForm);
         isValidIcon.mockClear();
@@ -127,5 +127,32 @@ describe('Settings', () => {
         waitFor(() => {
             expect(mockUpdatePage).toHaveBeenCalledTimes(2);
         });
-    })
+    });
+
+    test('popUpSettings works as expected', () => {
+        document.body.innerHTML = '<div class="home"></div><div class="settings-popup"></div>';
+        render(
+            <MemoryRouter>
+                <Settings
+                    pages={mockPages}
+                    page={mockPages[0]}
+                    updatePage={mockUpdatePage}
+                    isUniquePageName={mockIsUniquePageName}
+                    setWallpaper={mockSetWallpaper}
+                />
+            </MemoryRouter>
+        );
+
+        const home = document.querySelector('.home');
+        const settingsPopup = document.querySelector('.settings-popup')
+
+        expect(home).not.toHaveClass('blur');
+        expect(settingsPopup).not.toHaveClass('active');
+        popUpSettings();
+        expect(home).toHaveClass('blur');
+        expect(settingsPopup).toHaveClass('active');
+        popUpSettings();
+        expect(home).not.toHaveClass('blur');
+        expect(settingsPopup).not.toHaveClass('active');
+    });
 });

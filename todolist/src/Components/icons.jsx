@@ -33,6 +33,7 @@ export default function Icons({ selectIcon, page }) {
                         <li key={icon} className="col mb-4">
                             <div
                                 className="display px-3 py-4 mb-2 bg-body-secondary text-center rounded"
+                                data-testid={icon}
                                 onClick={() => selectIcon(icon)}
                                 onMouseOver={e => e.target.style.color = "#1976d2"}
                                 onMouseOut={e => e.target.style.color = "inherit"}
