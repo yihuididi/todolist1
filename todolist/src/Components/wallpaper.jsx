@@ -66,8 +66,9 @@ export default function Wallpaper({ selectWallpaper }) {
                         <div
                             className="display mb-2 text-center"
                             onClick={() => selectWallpaper(wallpaper)}
+                            data-testid={wallpaper}
                         >
-                            <img src={getImage(wallpaper)}/>
+                            <img src={getImage(wallpaper)} aria-label={wallpaper}/>
                             <div className="filter"/>
                         </div>
                         <div className="name text-muted text-center pt-1">{wallpaper}</div>
