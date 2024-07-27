@@ -53,5 +53,10 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/react": "^16.0.0"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(@bundled-es-modules)/).*/"
+    ]
   }
 }
