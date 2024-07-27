@@ -138,9 +138,9 @@ export const Inventory = ({ user }) => {
                     <div className="contain">
                         <div className="inventory">
                             {inventory.map(slot => (
-                                <div key={slot.id} data-id={slot.id} className="inventory-slot" data-testid={slot.id}>
+                                <div key={slot.id} data-id={slot.id} className="inventory-slot">
                                     {slot.item ? (
-                                        <img className="inventory-item" src={itemMap[slot.name]} draggable="true" data-testid="inventory-item"/>
+                                        <img className="inventory-item" src={itemMap[slot.name]} draggable="true"/>
                                     ) : null}
                                 </div>
                             ))}

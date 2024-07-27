@@ -1,6 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { act } from 'react';
 import Inventory from '../Inventory.jsx';
 import { collection, doc, getDocs, getDoc, updateDoc, addDoc } from 'firebase/firestore';
 import { auth, database } from '../../firebase';
@@ -30,7 +29,7 @@ jest.mock('firebase/firestore', () => ({
 }));
 
 describe('Inventory', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
         jest.clearAllMocks();
         collection.mockReturnValue('inventoryRef');
         getDocs.mockResolvedValue({
@@ -43,13 +42,11 @@ describe('Inventory', () => {
             return Promise.resolve({ data: () => mockItemData[ref.id] });
         });
         updateDoc.mockResolvedValue({});
-        await act(() => {
-          render(
-              <MemoryRouter>
-                  <Inventory user={mockUser} />
-              </MemoryRouter>
-          );
-        });
+        render(
+            <MemoryRouter>
+                <Inventory user={mockUser} />
+            </MemoryRouter>
+        );
     })
 
     test('renders inventory component', () => {
@@ -57,7 +54,6 @@ describe('Inventory', () => {
         mockInventory.forEach(slot => waitFor(() => (expect(screen.getByTestId(slot.id)).toBeInTheDocument())));
     });
 
-    /*
     test('checks if drag and drop has swapped items in backend', () => {
         waitFor(() => {
             const inventoryItems = screen.getAllByTestId('inventory-item');
@@ -72,5 +68,4 @@ describe('Inventory', () => {
             expect(updateDoc).toHaveBeenCalledWith(expect.anything(), expect.objectContaining(mockInventory[1]));
         });
     });
-    */
 });
