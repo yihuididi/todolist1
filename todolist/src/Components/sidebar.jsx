@@ -88,7 +88,7 @@ export default function Sidebar({user, pages, selectedPage, newPage, setNewPage,
                    </li>
 
                    <li>
-                       <a className="dropdown-item" href="">Profile</a>
+                       <a className="dropdown-item" href="">Inbox</a>
                    </li>
 
                    <li>
